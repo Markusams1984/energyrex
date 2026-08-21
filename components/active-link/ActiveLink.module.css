@@ -1,0 +1,10 @@
+@reference "../../app/globals.css";
+
+.link {
+    @apply flex items-center hover:underline hover:text-blue-400 mr-2 transition-all;
+}
+
+.active-link {
+    @apply text-blue-500;
+}
+

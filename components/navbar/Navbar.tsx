@@ -1,12 +1,13 @@
 import Link from "next/link"
 import { HomeIcon } from "@primer/octicons-react"
 import { AccessibilityInsetIcon } from "@primer/octicons-react"
+import { ActiveLink } from "../active-link/ActiveLink"
 
 const navItems = [
     { 
       path: '/about', 
       text: 'Nosotros', 
-      icon: <AccessibilityInsetIcon className="mr-2" /> // <-- Agregamos el ícono aquí
+      icon: <AccessibilityInsetIcon className="mr-2" /> 
     },
     { path: '/contact', text: 'Contacto' },
     { path: '/pricing', text: 'Precios' },
@@ -25,10 +26,7 @@ export const Navbar = () => {
 
         {
             navItems.map( navItem => (
-                <Link key={ navItem.path } className="mr-2 flex items-center" href={ navItem.path }>
-                { navItem.icon }
-                { navItem.text }
-                </Link>
+                <ActiveLink key={ navItem.path } { ...navItem }/>
             ))
         }
 
