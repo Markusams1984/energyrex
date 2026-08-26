@@ -1,2 +1,3 @@
 
-export * from './Hero';
+export * from './hero';
+export * from './hero-electric';

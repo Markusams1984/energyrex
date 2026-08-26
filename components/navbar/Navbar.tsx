@@ -1,35 +1,36 @@
-import Link from "next/link"
-import { HomeIcon } from "@primer/octicons-react"
-import { AccessibilityInsetIcon } from "@primer/octicons-react"
-import { ActiveLink } from "../active-link/ActiveLink"
+import Image from "next/image";
+import Link from "next/link";
+import { ActiveLink } from "../active-link/activeLink";
 
 const navItems = [
-    { 
-      path: '/about', 
-      text: 'Nosotros', 
-      icon: <AccessibilityInsetIcon className="mr-2" /> 
-    },
-    { path: '/contact', text: 'Contacto' },
-    { path: '/pricing', text: 'Precios' },
-]
+  { path: "/about", text: "Nosotros" },
+  { path: "/contact", text: "Contacto" },
+];
 
 export const Navbar = () => {
   return (
-    <nav className="flex bg-blue-800 bg-opacity-30 p-2 m-2 rounded">
-        
-        <Link href={'/'} className="flex items-center">
-        <HomeIcon className="mr-2"/>
-        <span>Inicio</span>
+    <header className="w-full bg-gradient-to-r from-brand-mist to-[#dde7e3] font-sans">
+      <nav className="mx-auto flex h-[76px] w-full max-w-[1400px] items-center gap-8 px-6 sm:px-10">
+        <Link href="/" aria-label="EnergyRex - Inicio" className="flex items-center">
+          <Image
+            src="/logo-full.svg"
+            alt="EnergyRex"
+            width={196}
+            height={36}
+            priority
+          />
         </Link>
 
-        <div className="flex flex-1"></div>
+        <div className="flex flex-1" />
 
-        {
-            navItems.map( navItem => (
-                <ActiveLink key={ navItem.path } { ...navItem }/>
-            ))
-        }
-
-    </nav>
-  )
-}
+        <ul className="flex items-center gap-7">
+          {navItems.map((navItem) => (
+            <li key={navItem.path}>
+              <ActiveLink {...navItem} />
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+  );
+};

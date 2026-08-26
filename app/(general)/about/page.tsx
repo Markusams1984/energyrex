@@ -1,3 +1,4 @@
+import AboutUs  from '../../../components/about-us/about-us';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,9 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-    return (
-        <>
-            <span className="text-7xl">Nosotros</span>
-        </>
-    )
+  return (
+    <main>
+      <AboutUs />
+    </main>
+  );
 }
