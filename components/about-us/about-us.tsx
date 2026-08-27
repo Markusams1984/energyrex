@@ -1,21 +1,4 @@
-const services = [
-  {
-    title: "Ingeniería y Proyectos Eléctricos",
-    text: "Elaboración de planos, memorias técnicas, presupuestos, detección de fallas y montajes completos en baja tensión.",
-  },
-  {
-    title: "Energía Solar Fotovoltaica",
-    text: "Diseño, instalación y mantención de sistemas On-Grid, Off-Grid e híbridos, aumentos de capacidad e informes de factibilidad energética.",
-  },
-  {
-    title: "Seguridad y Automatización",
-    text: "Instalación de cámaras de seguridad (CCTV), cercos eléctricos y sistemas de citofonía.",
-  },
-  {
-    title: "Certificaciones y Regularizaciones",
-    text: "Tramitación oficial de declaraciones SEC.",
-  },
-];
+import { services } from "@/lib/site-config";
 
 export const AboutUs = () => {
   return (
@@ -48,10 +31,11 @@ export const AboutUs = () => {
         </p>
 
         <ul className="mt-12 grid gap-5 sm:grid-cols-2">
-          {services.map(({ title, text }) => (
+          {services.map(({ slug, title, text }) => (
             <li
-              key={title}
-              className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              key={slug}
+              id={slug}
+              className="scroll-mt-28 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
             >
               <h2 className="text-lg font-semibold tracking-tight text-brand-mint">
                 {title}

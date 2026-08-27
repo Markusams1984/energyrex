@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ActiveLink } from "@/components/active-link";
-
-const navItems = [
-  { path: "/about", text: "Nosotros" },
-  { path: "/contact", text: "Contacto" },
-];
+import { navItems } from "@/lib/site-config";
 
 export const Navbar = () => {
   return (
