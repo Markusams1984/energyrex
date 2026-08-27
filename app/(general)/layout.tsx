@@ -1,9 +1,9 @@
+import { Backdrop } from "@/components/backdrop";
+
 export default function GeneralLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="flex flex-1 flex-col font-sans">
-    {children}
-    </main>;
+  return <Backdrop as="main">{children}</Backdrop>;
 }

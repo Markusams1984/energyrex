@@ -1,5 +1,5 @@
-import AboutUs  from '../../../components/about-us/about-us';
 import type { Metadata } from "next";
+import { AboutUs } from "@/components/about-us";
 
 export const metadata: Metadata = {
   title: "Nosotros",
@@ -8,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return (
-    <main>
-      <AboutUs />
-    </main>
-  );
+  return <AboutUs />;
 }

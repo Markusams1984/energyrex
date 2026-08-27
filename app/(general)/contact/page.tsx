@@ -1,7 +1,5 @@
-import { FormContact } from '@/components/form-contact/form-contact';
-import { InfoContact } from '@/components/info-contact/info-contact';
-import styles from '../section.module.css';
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { FormContact, InfoContact } from "@/components/contact";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -11,14 +9,9 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className={`${styles.dark} relative flex flex-1 flex-col overflow-hidden`}>
-      <div
-        className={`${styles.grid} pointer-events-none absolute inset-0`}
-        aria-hidden="true"
-      />
-
+    <>
       <InfoContact />
       <FormContact />
-    </div>
+    </>
   );
 }

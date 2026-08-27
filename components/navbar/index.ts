@@ -1,5 +1,1 @@
-
-export * from './Navbar';
-
-//Client components
-export { ActiveLink } from '../active-link/activeLink';
+export * from './navbar';

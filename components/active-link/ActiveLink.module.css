@@ -1,9 +1,0 @@
-@reference "../../app/globals.css";
-
-.link {
-    @apply flex items-center text-[15px] font-medium text-slate-600 transition-colors hover:text-brand-green;
-}
-
-.active-link {
-    @apply font-semibold text-brand-logo;
-}

@@ -1,5 +1,3 @@
-import styles from "./about-us.module.css";
-
 const services = [
   {
     title: "Ingeniería y Proyectos Eléctricos",
@@ -19,17 +17,10 @@ const services = [
   },
 ];
 
-export default function AboutUs() {
+export const AboutUs = () => {
   return (
-    <section
-      className={`${styles.dark} relative flex flex-1 items-center overflow-hidden`}
-    >
-      <div
-        className={`${styles.grid} pointer-events-none absolute inset-0`}
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
+    <section className="relative flex flex-1 items-center">
+      <div className="relative mx-auto w-full max-w-1400px px-6 py-24 sm:px-10 lg:py-28">
         <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-logo uppercase">
           <span className="h-px w-7 bg-brand-logo" aria-hidden="true" />
           Quiénes somos
@@ -74,4 +65,4 @@ export default function AboutUs() {
       </div>
     </section>
   );
-}
+};
