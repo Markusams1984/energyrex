@@ -139,18 +139,14 @@ export const Footer = () => {
           <p>
             © {year} {siteConfig.name}. Todos los derechos reservados.
           </p>
-          {(legal.razonSocial || legal.rut) && (
-            <p>
-              {legal.razonSocial}
-              {legal.razonSocial && legal.rut && " · "}
-              {legal.rut && `RUT ${legal.rut}`}
-            </p>
-          )}
+          <p>
+            {legal.razonSocial} · RUT {legal.rut}
+          </p>
           <Link
             href="/privacidad"
             className="transition-colors hover:text-brand-green"
           >
-            Política de privacidad
+            Política de Privacidad
           </Link>
         </div>
       </div>

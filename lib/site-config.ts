@@ -12,10 +12,10 @@ export const siteConfig = {
   certification: "Certificado por la SEC",
   /** Identificación legal exigible a un sitio comercial chileno. */
   legal: {
-    /** Razón social inscrita. Completar. */
-    razonSocial: "",
-    /** RUT de la empresa o del titular. Completar. */
-    rut: "",
+    razonSocial: "EnergyRex SpA",
+    rut: "78.470.849-7",
+    /** Fecha de la última revisión de la política de privacidad. */
+    politicaActualizada: "27 de agosto de 2026",
   },
   contact: {
     phone: "+56 9 3003 7134",
@@ -32,12 +32,11 @@ export const navItems = [
   { path: "/contact", text: "Contacto" },
 ];
 
-/** El footer sí necesita el enlace explícito a Inicio, más el legal. */
-export const footerNavItems = [
-  { path: "/", text: "Inicio" },
-  ...navItems,
-  { path: "/privacidad", text: "Política de privacidad" },
-];
+/**
+ * El footer sí necesita el enlace explícito a Inicio. La política de
+ * privacidad no va aquí: vive en el bloque legal de la barra inferior.
+ */
+export const footerNavItems = [{ path: "/", text: "Inicio" }, ...navItems];
 
 /**
  * Servicios de la empresa. El `slug` es el ancla dentro de /about, así el

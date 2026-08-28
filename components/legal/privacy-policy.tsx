@@ -14,7 +14,7 @@ const sections = [
   {
     title: "2. Datos que recopilamos",
     body: [
-      "Únicamente tratamos los datos que tú nos entregas de forma voluntaria a través del formulario de contacto: nombre, correo electrónico, teléfono (opcional) y el mensaje con la descripción de tu requerimiento.",
+      "Únicamente tratamos los datos que tú nos entregas de forma voluntaria a través del formulario de contacto: nombre, correo electrónico, teléfono (opcional) y el mensaje con la descripción de tu requerimiento. Actualmente el formulario de contacto se encuentra deshabilitado, por lo que no estamos recibiendo datos a través del sitio.",
       "No utilizamos cookies de publicidad ni de seguimiento, y no recopilamos datos sensibles en el sentido de la Ley N° 19.628.",
     ],
   },
@@ -40,7 +40,7 @@ const sections = [
   {
     title: "6. Seguridad",
     body: [
-      "Aplicamos medidas razonables de seguridad para evitar el acceso no autorizado, la pérdida o la alteración de la información. El envío del formulario se realiza sobre una conexión cifrada (HTTPS).",
+      "Aplicamos medidas razonables de seguridad para evitar el acceso no autorizado, la pérdida o la alteración de la información. El sitio se sirve sobre conexión cifrada y el acceso a los mensajes recibidos está restringido al responsable.",
     ],
   },
   {
@@ -53,7 +53,7 @@ const sections = [
   {
     title: "8. Marco normativo aplicable",
     body: [
-      "Este sitio se rige por la Ley N° 19.628 sobre Protección de la Vida Privada. La Ley N° 21.719, publicada en diciembre de 2024, moderniza dicho régimen y crea la Agencia de Protección de Datos Personales; su entrada en vigencia está diferida a diciembre de 2026. Actualizaremos esta política para ajustarnos a las nuevas exigencias antes de esa fecha.",
+      "Este sitio se rige por la Ley N° 19.628 sobre Protección de la Vida Privada. La Ley N° 21.719, publicada en diciembre de 2024, moderniza dicho régimen y crea la Agencia de Protección de Datos Personales; su entrada en vigencia está diferida a diciembre de 2026.",
     ],
   },
   {
@@ -103,6 +103,10 @@ export const PrivacyPolicy = () => {
             </article>
           ))}
         </div>
+
+        <p className="mt-8 text-sm text-slate-400">
+          Última actualización: {legal.politicaActualizada}
+        </p>
       </div>
     </section>
   );
