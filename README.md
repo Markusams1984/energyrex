@@ -41,8 +41,8 @@ Construido con Next.js 16 (App Router), React 19, TypeScript y Tailwind CSS v4.
 | [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | ^2.1.1 / ^3.6.0 | Helper `cn()` para componer clases |
 | [ESLint](https://eslint.org) | ^9 | Linting (flat config + `core-web-vitals`) |
 
-Seis dependencias de producción en total. El proyecto **no usa** librerías de
-componentes, de animación ni de estado: todo el UI es propio.
+El proyecto **no usa** librerías de componentes, de animación ni de estado:
+todo el UI es propio. La lista vigente de dependencias está en `package.json`.
 
 Fuente: **Geist**, cargada con `next/font/google`.
 
@@ -161,7 +161,7 @@ energyrex/
 
 ## Rutas
 
-Las cuatro rutas se prerenderizan como contenido estático en el build.
+Todas las rutas se prerenderizan como contenido estático en el build.
 
 | Ruta | Página | Título | Componentes |
 |---|---|---|---|
@@ -191,7 +191,7 @@ export const siteConfig = {
 
 export const navItems       // menú del navbar
 export const footerNavItems // navItems + Inicio
-export const services       // 4 servicios con slug para anclas en /about
+export const services       // servicios, con slug para anclas en /about
 ```
 
 Detalles que conviene conocer antes de editarlo:
@@ -210,9 +210,10 @@ Detalles que conviene conocer antes de editarlo:
 
 ## Sistema de diseño
 
-[`app/globals.css`](app/globals.css) tiene 41 líneas y define solo lo que el
-sitio usa. La paleta de marca vive en un bloque `@theme`, lo que convierte cada
-color en una utilidad de Tailwind (`text-brand-mint`, `bg-brand-navy`):
+[`app/globals.css`](app/globals.css) es deliberadamente corto: define solo lo
+que el sitio usa. La paleta de marca vive en un bloque `@theme`, lo que
+convierte cada color en una utilidad de Tailwind (`text-brand-mint`,
+`bg-brand-navy`):
 
 ```css
 @theme {
@@ -227,9 +228,9 @@ color en una utilidad de Tailwind (`text-brand-mint`, `bg-brand-navy`):
 }
 ```
 
-Los cuatro tokens restantes (`--background`, `--foreground`, `--border`,
-`--ring`) existen porque los consume `@layer base`. **El sitio tiene un solo
-tema:** no hay bloque `.dark` ni variante `dark:`.
+Los tokens restantes (`--background`, `--foreground`, `--border`, `--ring`)
+existen porque los consume `@layer base`. **El sitio tiene un solo tema:** no
+hay bloque `.dark` ni variante `dark:`.
 
 El contraste visual lo da [`Backdrop`](components/backdrop/backdrop.tsx):
 degradado navy → verde con una rejilla enmascarada encima. Navbar y footer usan
@@ -308,13 +309,13 @@ todo el contenido variable en [`lib/site-config.ts`](lib/site-config.ts).
 
 ### Etapa 7 — Limpieza de dependencias
 
-Se desinstaló shadcn/ui junto a seis paquetes que ningún archivo importaba
+Se desinstaló shadcn/ui junto a los paquetes que ningún archivo importaba
 (`@base-ui/react`, `gsap`, `@gsap/react`, `@primer/octicons-react`,
 `class-variance-authority`, `tw-animate-css`): **−239 paquetes, −88 MB**.
 
-`globals.css` bajó de 144 a 41 líneas al retirar los tokens de shadcn sin
-consumidor y el bloque `.dark`. Se eliminó también `Geist_Mono`, que se
-descargaba en cada visita sin que ninguna clase `font-mono` la usara.
+`globals.css` se recortó al retirar los tokens de shadcn sin consumidor y el
+bloque `.dark`. Se eliminó también `Geist_Mono`, que se descargaba en cada
+visita sin que ninguna clase `font-mono` la usara.
 
 > Para reinstalar shadcn: `npx shadcn@latest init` (restaura los tokens en
 > `globals.css`) y luego `npx shadcn@latest add <componente>`, que reinstala
@@ -329,7 +330,7 @@ el error era invisible; en el Linux del deploy habría fallado con
 
 ### Etapa 9 — Cumplimiento de protección de datos
 
-Se publicó `/privacidad` con nueve secciones ajustadas a la **Ley N° 19.628**,
+Se publicó `/privacidad` con las secciones que exige la **Ley N° 19.628**,
 se agregó la identificación legal (razón social y RUT) al footer, y el
 formulario de contacto quedó **visible pero deshabilitado** con alternativas de
 contacto directo.
@@ -367,8 +368,8 @@ export * from './navbar';
 
 **Server vs. Client Components.** Todo componente es de servidor por defecto.
 Se marca con `'use client'` solo cuando necesita hooks, estado o eventos del
-navegador. Hoy solo dos lo son: `ActiveLink` (`usePathname`) y `ElectricBorder`
-(`<canvas>`).
+navegador. Hoy lo son `ActiveLink` (necesita `usePathname`) y `ElectricBorder`
+(dibuja en `<canvas>`).
 
 **Estilos.** Tailwind exclusivamente; **no se usan CSS Modules**. Cuando una
 clase se repite dentro de un archivo, se extrae a una constante al inicio:
