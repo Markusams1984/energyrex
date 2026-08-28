@@ -15,9 +15,10 @@ los suyos. Si algún día unificas la paleta, este es el lugar donde anotarlo.
 | Archivo | Qué es |
 |---|---|
 | `logo-full-source.jpg` | JPEG de 708×298 del que se vectorizó el logo completo |
+| `generate-og-image.mjs` | Genera `app/opengraph-image.png` (ver abajo) |
 
-Es el único archivo que no se puede regenerar desde ningún otro, y por eso
-vive aquí. Todo lo demás sale de él o de los SVG.
+`logo-full-source.jpg` es el único archivo que no se puede regenerar desde
+ningún otro, y por eso vive aquí. Todo lo demás sale de él o de los SVG.
 
 Esta carpeta **no se sirve al público**: Next solo publica lo que está en
 `public/`.
@@ -57,6 +58,26 @@ rsvg-convert -w 512 -h 512 public/logo.svg -o public/icon.png
 `apple-icon.png` debe quedar **opaco** — iOS rellena la transparencia con
 negro. Ponle fondo blanco después de exportarlo.
 
+## La imagen de Open Graph
+
+`app/opengraph-image.png` (1200×630) es la miniatura que aparece cuando alguien
+comparte el link por WhatsApp o redes. Vive en `app/` y no en `public/` porque
+Next la detecta por **convención de nombre**: no se declara en `metadata`.
+
+Se genera, no se edita a mano:
+
+```bash
+node design/generate-og-image.mjs
+```
+
+No instala nada: usa `next/og`, el renderizador que ya viene dentro del paquete
+`next`, con su Satori y su copia de la fuente Geist.
+
+Vuelve a correrlo si cambia `public/logo-full.svg`, si cambian los colores de
+marca en `app/globals.css`, o si cambia el degradado de
+`components/backdrop/backdrop.tsx`. Esos valores están copiados dentro del
+script porque corre fuera de Next y no puede leer el CSS.
+
 ## Regla
 
 Nunca escales hacia arriba un PNG. Si necesitas el logo en un tamaño nuevo,
@@ -66,15 +87,12 @@ vuelve siempre al SVG.
 
 **Versión para fondos oscuros.** El logo completo es azul marino casi negro,
 así que desaparece sobre fondos oscuros y solo se ve la mitad verde de la S.
-Si el sitio va a tener secciones oscuras, hace falta una variante con el
-texto en blanco.
+`generate-og-image.mjs` lo resuelve reemplazando los dos `fill` por blanco al
+vuelo, pero eso vive dentro del script. Si el sitio necesita el logo claro en
+más lugares, conviene un `logo-full-inverso.svg` de verdad en `public/`.
 
 **Calidad del trazo.** `logo-full.svg` se vectorizó desde un JPEG de 708 px,
 poca resolución para las letras. A tamaño de cabecera se ve limpio, pero de
 cerca las curvas tienen ondulaciones. Si consigues el archivo original del
 diseñador (`.ai`, `.eps` o `.svg`), reemplaza `logo-full.svg` por ese y no
 hay que cambiar nada más.
-
-**`og-image.png`** (1200×630) — la miniatura que aparece cuando alguien
-comparte el link por WhatsApp. Para un negocio que se mueve por WhatsApp
-importa más que el favicon. Se exporta desde `logo-full.svg`.
