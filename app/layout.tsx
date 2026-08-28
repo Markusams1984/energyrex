@@ -10,17 +10,39 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+/**
+ * Título y descripción por defecto del sitio. Viven en una constante porque
+ * los consumen dos bloques distintos (`metadata` y `metadata.openGraph`) y
+ * escribirlos dos veces garantiza que tarde o temprano queden desalineados.
+ */
+const SITE_TITLE = "EnergyRex | Instalaciones Eléctricas Certificadas SEC";
+const SITE_DESCRIPTION =
+  "Instalador eléctrico certificado SEC. Proyectos, instalaciones residenciales, comerciales e industriales y certificación TE1, TE2 y TE3.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://energyrex.cl"),
   title: {
-    default: "EnergyRex | Instalaciones Eléctricas Certificadas SEC",
+    default: SITE_TITLE,
     template: "%s | EnergyRex",
   },
-  description: "Instalador eléctrico certificado SEC. Proyectos, instalaciones residenciales, comerciales e industriales y certificación TE1, TE2 y TE3.",
+  description: SITE_DESCRIPTION,
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png"
   },
+  /**
+   * OJO con la herencia: una página hereda este bloque completo solo mientras
+   * no declare el suyo. Si una página define `openGraph`, REEMPLAZA este
+   * objeto entero (no se mezclan campo por campo), así que ahí hay que repetir
+   * `siteName`, `locale` y `type` — o extraerlos a una constante compartida y
+   * expandirla con spread en ambos lados.
+   *
+   * `images` no se declara a propósito: Next la resuelve por convención de
+   * archivo desde `app/opengraph-image.png`.
+   */
   openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     siteName: "EnergyRex",
     locale: "es_CL",
     type: "website",
