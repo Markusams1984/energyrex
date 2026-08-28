@@ -7,10 +7,9 @@ import { cn } from "@/lib/utils";
 interface Props {
   path: string;
   text: string;
-  icon?: React.ReactNode;
 }
 
-export const ActiveLink = ({ path, text, icon }: Props) => {
+export const ActiveLink = ({ path, text }: Props) => {
   const pathName = usePathname();
   const isActive = pathName === path;
 
@@ -18,11 +17,10 @@ export const ActiveLink = ({ path, text, icon }: Props) => {
     <Link
       href={path}
       className={cn(
-        "flex items-center gap-2 text-[15px] font-medium text-slate-600 transition-colors hover:text-brand-green",
+        "flex items-center text-[15px] font-medium text-slate-600 transition-colors hover:text-brand-green",
         isActive && "font-semibold text-brand-logo",
       )}
     >
-      {icon}
       {text}
     </Link>
   );
