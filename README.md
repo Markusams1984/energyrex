@@ -2,13 +2,13 @@
 
 Sitio web corporativo de **EnergyRex**, servicio de instalaciones eléctricas
 certificadas SEC (Chile): proyectos residenciales, comerciales e industriales,
-y certificación TE1, TE2 y TE3.
+energía solar fotovoltaica y regularizaciones.
 
 Construido con Next.js 16 (App Router), React 19, TypeScript y Tailwind CSS v4.
 
 > **Estado:** en desarrollo. Este README documenta únicamente lo que ya está
-> implementado. La sección [Próximos pasos](#próximos-pasos) queda abierta para
-> ir sumando etapas a medida que avance el proyecto.
+> implementado. La sección [Próximos pasos](#próximos-pasos) lista lo que falta,
+> con su prioridad.
 
 ---
 
@@ -19,10 +19,13 @@ Construido con Next.js 16 (App Router), React 19, TypeScript y Tailwind CSS v4.
 3. [Puesta en marcha](#puesta-en-marcha)
 4. [Scripts disponibles](#scripts-disponibles)
 5. [Estructura del proyecto](#estructura-del-proyecto)
-6. [Implementación paso a paso](#implementación-paso-a-paso)
-7. [Convenciones del código](#convenciones-del-código)
-8. [Recursos gráficos](#recursos-gráficos)
-9. [Próximos pasos](#próximos-pasos)
+6. [Rutas](#rutas)
+7. [Configuración de contenido](#configuración-de-contenido)
+8. [Sistema de diseño](#sistema-de-diseño)
+9. [Implementación paso a paso](#implementación-paso-a-paso)
+10. [Convenciones del código](#convenciones-del-código)
+11. [Recursos gráficos](#recursos-gráficos)
+12. [Próximos pasos](#próximos-pasos)
 
 ---
 
@@ -30,14 +33,18 @@ Construido con Next.js 16 (App Router), React 19, TypeScript y Tailwind CSS v4.
 
 | Herramienta | Versión | Rol |
 |---|---|---|
-| [Next.js](https://nextjs.org) | 16.3.1 | Framework, App Router, SSR |
+| [Next.js](https://nextjs.org) | 16.3.1 | Framework, App Router, RSC |
 | [React](https://react.dev) | 19.2.8 | Librería de UI |
 | [TypeScript](https://www.typescriptlang.org) | ^5 | Tipado estático (`strict: true`) |
 | [Tailwind CSS](https://tailwindcss.com) | ^4 | Estilos utilitarios vía PostCSS |
-| [@primer/octicons-react](https://primer.style/octicons) | ^19.33.0 | Íconos de la navegación |
+| [lucide-react](https://lucide.dev) | ^1.34.0 | Íconos del footer y del formulario |
+| [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | ^2.1.1 / ^3.6.0 | Helper `cn()` para componer clases |
 | [ESLint](https://eslint.org) | ^9 | Linting (flat config + `core-web-vitals`) |
 
-Fuentes: **Geist** y **Geist Mono**, cargadas con `next/font/google`.
+Seis dependencias de producción en total. El proyecto **no usa** librerías de
+componentes, de animación ni de estado: todo el UI es propio.
+
+Fuente: **Geist**, cargada con `next/font/google`.
 
 ---
 
@@ -81,15 +88,15 @@ npm run dev
 Visita [http://localhost:3000](http://localhost:3000). Los cambios en los
 archivos se reflejan automáticamente sin reiniciar el servidor.
 
-**5. Verificar la build de producción** (opcional, antes de desplegar)
+**5. Verificar la build de producción** (obligatorio antes de desplegar)
 
 ```bash
-npm run build
-npm start
+npx tsc --noEmit && npm run lint && npm run build
 ```
 
-> El proyecto no requiere variables de entorno por ahora. Cuando se agreguen,
-> se documentarán en esta sección junto con un archivo `.env.example`.
+> El proyecto no requiere variables de entorno por ahora. Cuando se conecte el
+> envío del formulario harán falta credenciales del proveedor de correo; se
+> documentarán aquí junto con un archivo `.env.example`.
 
 ---
 
@@ -108,35 +115,126 @@ npm start
 
 ```
 energyrex/
-├── app/                          # App Router
-│   ├── (general)/                # Grupo de rutas con navegación compartida
-│   │   ├── about/page.tsx        # /about   — Nosotros
-│   │   ├── contact/page.tsx      # /contact — Contacto
-│   │   ├── pricing/page.tsx      # /pricing — Precios
-│   │   └── layout.tsx            # Layout con Navbar
-│   ├── globals.css               # Estilos globales + tema Tailwind
-│   ├── layout.tsx                # Root layout: fuentes y metadata SEO
-│   └── page.tsx                  # /        — Home
-├── components/
-│   ├── active-link/
-│   │   ├── ActiveLink.tsx        # Client Component: enlace con estado activo
-│   │   └── ActiveLink.module.css # Estilos del enlace (CSS Modules)
-│   └── navbar/
-│       ├── Navbar.tsx            # Barra de navegación
-│       └── index.ts              # Barrel export del módulo
-├── design/                       # Archivos fuente de diseño (no se publican)
-│   ├── README.md                 # Guía de recursos gráficos y marca
-│   └── logo-full-source.jpg      # JPEG original del logo completo
-├── public/                       # Assets servidos estáticamente
-│   ├── logo.svg                  # Isotipo
-│   ├── logo-full.svg             # Logo completo
-│   ├── icon.png                  # Favicon 512×512
-│   └── apple-icon.png            # Ícono iOS 180×180
+├── app/                                # App Router
+│   ├── (general)/                      # Grupo de rutas con fondo compartido
+│   │   ├── about/page.tsx              # /about      — Nosotros
+│   │   ├── contact/page.tsx            # /contact    — Contacto
+│   │   ├── privacidad/page.tsx         # /privacidad — Política de Privacidad
+│   │   └── layout.tsx                  # Envuelve el grupo en <Backdrop>
+│   ├── globals.css                     # Tema Tailwind v4 y paleta de marca
+│   ├── layout.tsx                      # Root layout: fuente, metadata, Navbar y Footer
+│   └── page.tsx                        # /           — Home
+├── components/                         # Un directorio por componente + barrel
+│   ├── about-us/                       # Sección de la página Nosotros
+│   ├── active-link/                    # Client Component: enlace con estado activo
+│   ├── backdrop/                       # Fondo de marca (degradado + rejilla)
+│   ├── contact/                        # Ficha de contacto y formulario
+│   ├── electric-border/                # Client Component: borde animado en canvas
+│   ├── footer/                         # Pie de página global
+│   ├── hero/                           # Portada de la home
+│   ├── legal/                          # Contenido de la política de privacidad
+│   └── navbar/                         # Barra de navegación
+├── lib/
+│   ├── site-config.ts                  # Datos públicos: contacto, legal, servicios
+│   └── utils.ts                        # Helper cn()
+├── design/                             # Archivos fuente de diseño (no se publican)
+│   ├── README.md                       # Guía de recursos gráficos y marca
+│   └── logo-full-source.jpg            # JPEG original del logo completo
+├── public/                             # Assets servidos estáticamente
+│   ├── logo.svg                        # Isotipo
+│   ├── logo-full.svg                   # Logo completo
+│   ├── icon.png                        # Favicon 512×512
+│   └── apple-icon.png                  # Ícono iOS 180×180
+├── AGENTS.md                           # Instrucciones para agentes de IA
+├── components.json                     # Config de shadcn (ver nota abajo)
 ├── eslint.config.mjs
 ├── next.config.ts
 ├── postcss.config.mjs
 └── tsconfig.json
 ```
+
+> **`components.json`** quedó como configuración de recuperación: shadcn/ui se
+> desinstaló (ver [Etapa 7](#etapa-7--limpieza-de-dependencias)), pero el archivo
+> permite reinstalarlo con `npx shadcn@latest init` conservando estilo y alias.
+
+---
+
+## Rutas
+
+Las cuatro rutas se prerenderizan como contenido estático en el build.
+
+| Ruta | Página | Título | Componentes |
+|---|---|---|---|
+| `/` | [`app/page.tsx`](app/page.tsx) | *(por defecto)* | `HeroElectric`, `Hero` |
+| `/about` | [`app/(general)/about/page.tsx`](app/(general)/about/page.tsx) | Nosotros | `AboutUs` |
+| `/contact` | [`app/(general)/contact/page.tsx`](app/(general)/contact/page.tsx) | Contacto | `InfoContact`, `FormContact` |
+| `/privacidad` | [`app/(general)/privacidad/page.tsx`](app/(general)/privacidad/page.tsx) | Política de Privacidad | `PrivacyPolicy` |
+
+El grupo `(general)` no aparece en la URL: solo envuelve sus páginas en
+`<Backdrop as="main">`. La home aplica el mismo `Backdrop` por su cuenta.
+
+---
+
+## Configuración de contenido
+
+[`lib/site-config.ts`](lib/site-config.ts) es la **fuente única de verdad** de
+los datos públicos. Ningún componente escribe un teléfono, un correo ni un
+enlace a mano: si un dato aparece en dos páginas, sale de aquí.
+
+```ts
+export const siteConfig = {
+  name, tagline, responsable,
+  certification: { short, full, organismo },
+  legal:         { razonSocial, rut, politicaActualizada },
+  contact:       { phone, phoneE164, whatsapp, email },
+};
+
+export const navItems       // menú del navbar
+export const footerNavItems // navItems + Inicio
+export const services       // 4 servicios con slug para anclas en /about
+```
+
+Detalles que conviene conocer antes de editarlo:
+
+- **`certification` tiene dos redacciones a propósito.** `short` va en el badge
+  del footer; `full` en la ficha formal de `/contact`. Ambas son correctas y
+  **no deben unificarse**.
+- **`phone` y `phoneE164` son el mismo número.** El primero es legible; el
+  segundo alimenta `href="tel:"`, que no admite espacios.
+- **`services[].slug`** hace doble trabajo: es el `id` de la tarjeta en `/about`
+  y el ancla del enlace del footer (`/about#energia-solar`).
+- **`legal.politicaActualizada`** es la fecha que muestra el pie de la política.
+  Actualízala cada vez que cambie el texto legal.
+
+---
+
+## Sistema de diseño
+
+[`app/globals.css`](app/globals.css) tiene 41 líneas y define solo lo que el
+sitio usa. La paleta de marca vive en un bloque `@theme`, lo que convierte cada
+color en una utilidad de Tailwind (`text-brand-mint`, `bg-brand-navy`):
+
+```css
+@theme {
+  --color-brand-ink: #131f3c;
+  --color-brand-navy: #0c1a2b;
+  --color-brand-navy-mid: #10243b;
+  --color-brand-forest: #0b4b3a;
+  --color-brand-green: #0e7a4f;
+  --color-brand-mint: #35d08c;
+  --color-brand-logo: #0a6647;  /* verde exacto del logo-full.svg */
+  --color-brand-mist: #ecefee;
+}
+```
+
+Los cuatro tokens restantes (`--background`, `--foreground`, `--border`,
+`--ring`) existen porque los consume `@layer base`. **El sitio tiene un solo
+tema:** no hay bloque `.dark` ni variante `dark:`.
+
+El contraste visual lo da [`Backdrop`](components/backdrop/backdrop.tsx):
+degradado navy → verde con una rejilla enmascarada encima. Navbar y footer usan
+en cambio el degradado claro `brand-mist`, así la página queda encuadrada —
+claro arriba, oscuro al medio, claro abajo.
 
 ---
 
@@ -154,30 +252,11 @@ Proyecto inicializado con `create-next-app`, configurado con:
 - **Tailwind CSS v4** integrado vía `@tailwindcss/postcss` en `postcss.config.mjs`
 - **ESLint 9** con flat config, extendiendo `core-web-vitals` y `typescript`
 
-En [`app/globals.css`](app/globals.css) se define el tema con la sintaxis de
-Tailwind v4: `@import "tailwindcss"` y un bloque `@theme inline` que expone las
-variables de color y de fuente como tokens utilizables desde las clases.
-
-```css
-@import "tailwindcss";
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-```
-
-Incluye además soporte de modo oscuro por `prefers-color-scheme`.
-
----
-
 ### Etapa 2 — Metadata SEO, íconos y páginas base
 
-**2.1 Metadata global.** En [`app/layout.tsx`](app/layout.tsx) se configura el
-objeto `metadata` del root layout, con plantilla de título para que cada página
-hija solo declare su propio nombre:
+En [`app/layout.tsx`](app/layout.tsx) se configura el `metadata` del root
+layout, con plantilla de título para que cada página hija solo declare su
+propio nombre:
 
 ```tsx
 export const metadata: Metadata = {
@@ -185,16 +264,9 @@ export const metadata: Metadata = {
     default: "EnergyRex | Instalaciones Eléctricas Certificadas SEC",
     template: "%s | EnergyRex",
   },
-  description: "Instalador eléctrico certificado SEC...",
-  icons: { icon: "/icon.png", apple: "/apple-icon.png" },
-  openGraph: { siteName: "EnergyRex", locale: "es_CL", type: "website" },
+  ...
 };
 ```
-
-El `<html>` declara `lang="es"` y aplica las variables de fuente Geist junto a
-las clases de layout base (`h-full`, `antialiased`), mientras que el `<body>`
-usa `min-h-full flex flex-col` para permitir un pie de página pegado al fondo
-más adelante.
 
 El layout se tipa con el helper global de Next.js 16:
 
@@ -205,158 +277,67 @@ export default function RootLayout({ children }: LayoutProps<"/">) { ... }
 `LayoutProps` y `PageProps` son helpers **globales** —no se importan— generados
 al ejecutar `next dev`, `next build` o `next typegen`.
 
-**2.2 Íconos.** Se reemplazó el `favicon.ico` de la plantilla por
-`public/icon.png` (512×512, transparente) y `public/apple-icon.png` (180×180,
-opaco, requerido por iOS), declarados en el campo `icons` de la metadata.
-
-**2.3 Páginas.** Se crearon tres rutas, cada una con su propia metadata:
-
-| Ruta | Archivo | Título |
-|---|---|---|
-| `/about` | [`app/(general)/about/page.tsx`](app/(general)/about/page.tsx) | Nosotros |
-| `/contact` | [`app/(general)/contact/page.tsx`](app/(general)/contact/page.tsx) | Contacto |
-| `/pricing` | [`app/(general)/pricing/page.tsx`](app/(general)/pricing/page.tsx) | Precios y Presupuestos |
-
-Cada página exporta su `metadata` con título y descripción propios; el título
-se compone automáticamente con el `template` del root layout.
-
-```tsx
-export const metadata: Metadata = {
-  title: "Nosotros",
-  description: "Conoce a EnergyRex...",
-};
-```
-
-> El contenido de estas páginas es todavía un marcador de posición
-> (`<span className="text-7xl">`). La maquetación real es trabajo pendiente.
-
----
+El `<html>` declara `lang="es"`; el `<body>` usa `min-h-full flex flex-col`
+para que el footer quede pegado al fondo.
 
 ### Etapa 3 — Organización de recursos gráficos
 
-Se separaron los archivos de origen de los que consume el sitio:
+Se separaron los archivos de origen de los que consume el sitio: **`design/`**
+guarda el material fuente no regenerable; **`public/`** lo que el sitio sirve.
+La documentación de marca vive en [`design/README.md`](design/README.md).
 
-- **`design/`** guarda el material fuente que no se puede regenerar
-  (`logo-full-source.jpg`). Next.js no publica esta carpeta.
-- **`public/`** guarda lo que el sitio sirve: `logo.svg` (isotipo),
-  `logo-full.svg` (logo completo vectorizado), `icon.png` y `apple-icon.png`.
+### Etapa 4 — Grupo de rutas `(general)`, navbar y `ActiveLink`
 
-Se eliminaron los SVG de ejemplo de `create-next-app` (`next.svg`,
-`vercel.svg`, `file.svg`, `globe.svg`, `window.svg`).
+Los paréntesis crean un **grupo de rutas**: organiza archivos y comparte layout
+**sin** aparecer en la URL.
 
-La documentación de marca —paleta de colores, proporciones del logo, cómo
-exportar PNG desde SVG— vive en [`design/README.md`](design/README.md).
+[`components/navbar/navbar.tsx`](components/navbar/navbar.tsx) es un **Server
+Component** y delega cada enlace en
+[`ActiveLink`](components/active-link/active-link.tsx), que sí es Client
+Component porque necesita `usePathname` para resaltar la sección actual.
 
----
+### Etapa 5 — Home: `Backdrop`, `Hero` y `ElectricBorder`
 
-### Etapa 4 — Grupo de rutas `(general)` y barra de navegación
+Se implementó la portada con el fondo de marca y un borde animado dibujado en
+`<canvas>` con React puro, sin librerías de animación.
 
-**4.1 Grupo de rutas.** Las tres páginas se movieron dentro de `app/(general)/`.
-Los paréntesis crean un **grupo de rutas**: organiza archivos y permite
-compartir un layout **sin** aparecer en la URL. `/about` sigue siendo `/about`.
+### Etapa 6 — Contenido, `site-config` y footer
 
-[`app/(general)/layout.tsx`](app/(general)/layout.tsx) monta la `Navbar` sobre
-todas las páginas del grupo:
+Se maquetaron *Nosotros* y *Contacto*, se creó el footer global y se centralizó
+todo el contenido variable en [`lib/site-config.ts`](lib/site-config.ts).
 
-```tsx
-export default function GeneralLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <Navbar />
-      <main className="flex flex-col items-center p-24">
-        <span className="text-lg">EnergyRex</span>
-        {children}
-      </main>
-    </>
-  );
-}
-```
+### Etapa 7 — Limpieza de dependencias
 
-**4.2 Navbar.** [`components/navbar/Navbar.tsx`](components/navbar/Navbar.tsx)
-es un **Server Component**: no lleva estado ni eventos. Define los enlaces en un
-arreglo y los recorre, dejando el enlace de Inicio fijo a la izquierda y el
-resto empujado a la derecha con un separador flexible.
+Se desinstaló shadcn/ui junto a seis paquetes que ningún archivo importaba
+(`@base-ui/react`, `gsap`, `@gsap/react`, `@primer/octicons-react`,
+`class-variance-authority`, `tw-animate-css`): **−239 paquetes, −88 MB**.
 
-```tsx
-const navItems = [
-  { path: '/about', text: 'Nosotros', icon: <AccessibilityInsetIcon className="mr-2" /> },
-  { path: '/contact', text: 'Contacto' },
-  { path: '/pricing', text: 'Precios' },
-]
-```
+`globals.css` bajó de 144 a 41 líneas al retirar los tokens de shadcn sin
+consumidor y el bloque `.dark`. Se eliminó también `Geist_Mono`, que se
+descargaba en cada visita sin que ninguna clase `font-mono` la usara.
 
-El campo `icon` es opcional: hoy solo lo usa el enlace *Nosotros*.
+> Para reinstalar shadcn: `npx shadcn@latest init` (restaura los tokens en
+> `globals.css`) y luego `npx shadcn@latest add <componente>`, que reinstala
+> por su cuenta las dependencias npm que el componente necesite.
 
-**4.3 Íconos.** Se agregó `@primer/octicons-react` como dependencia; se usan
-`HomeIcon` y `AccessibilityInsetIcon`.
+### Etapa 8 — Corrección de casing para deploy
 
----
+`components/hero/Hero.tsx` estaba commiteado con mayúscula mientras el barrel
+importaba `'./hero'`. En macOS el sistema de archivos no distingue mayúsculas y
+el error era invisible; en el Linux del deploy habría fallado con
+`Module not found`. Se corrigió con `git mv` en dos pasos.
 
-### Etapa 5 — Componente `ActiveLink` y CSS Modules
+### Etapa 9 — Cumplimiento de protección de datos
 
-Para resaltar la sección en la que está el usuario se creó
-[`components/active-link/ActiveLink.tsx`](components/active-link/ActiveLink.tsx),
-un **Client Component** (`'use client'`) porque necesita el hook `usePathname`:
+Se publicó `/privacidad` con nueve secciones ajustadas a la **Ley N° 19.628**,
+se agregó la identificación legal (razón social y RUT) al footer, y el
+formulario de contacto quedó **visible pero deshabilitado** con alternativas de
+contacto directo.
 
-```tsx
-'use client';
-
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import style from './ActiveLink.module.css';
-
-export const ActiveLink = ({ path, text, icon }: Props) => {
-  const pathName = usePathname();
-
-  return (
-    <Link
-      className={`${style.link} ${(pathName === path) && style['active-link']}`}
-      href={path}
-    >
-      {icon}
-      {text}
-    </Link>
-  )
-}
-```
-
-Los estilos viven en
-[`ActiveLink.module.css`](components/active-link/ActiveLink.module.css) y
-combinan CSS Modules con utilidades de Tailwind mediante `@apply`. En Tailwind
-v4 esto exige declarar `@reference` al inicio del archivo para que el módulo
-conozca el tema del proyecto:
-
-```css
-@reference "../../app/globals.css";
-
-.link {
-  @apply flex items-center hover:underline hover:text-blue-400 mr-2 transition-all;
-}
-
-.active-link {
-  @apply text-blue-500;
-}
-```
-
-La `Navbar` delega en `ActiveLink` cada elemento del arreglo, propagando las
-props con spread:
-
-```tsx
-{navItems.map(navItem => (
-  <ActiveLink key={navItem.path} {...navItem} />
-))}
-```
-
-Finalmente, [`components/navbar/index.ts`](components/navbar/index.ts) actúa
-como *barrel export*, separando explícitamente los componentes de servidor de
-los de cliente:
-
-```ts
-export * from './Navbar';
-
-//Client components
-export { ActiveLink } from '../active-link/ActiveLink';
-```
+El motivo: la Server Action `enviarMensaje` nunca envió correo — solo imprimía
+en el log del servidor. El formulario fallaba en silencio y el visitante creía
+haber escrito. Ver el `TODO` en
+[`form-contact.tsx`](components/contact/form-contact.tsx) para conectarlo.
 
 ---
 
@@ -366,23 +347,47 @@ export { ActiveLink } from '../active-link/ActiveLink';
 (`tsconfig.json` → `paths`). Usa `@/components/navbar` en vez de rutas
 relativas largas.
 
+**Nombres de archivo en `kebab-case` minúscula**, siempre. El componente
+exportado va en `PascalCase`:
+
+```
+components/active-link/active-link.tsx  →  export const ActiveLink
+```
+
+Esto no es cosmético: macOS no distingue mayúsculas y Linux sí, así que un
+archivo con casing inconsistente compila en local y rompe el deploy
+(ver [Etapa 8](#etapa-8--corrección-de-casing-para-deploy)).
+
+**Organización de componentes.** Un directorio por componente en `components/`,
+con un `index.ts` que reexporta:
+
+```ts
+export * from './navbar';
+```
+
 **Server vs. Client Components.** Todo componente es de servidor por defecto.
 Se marca con `'use client'` solo cuando necesita hooks, estado o eventos del
-navegador —como `ActiveLink` con `usePathname`—. Mantener la frontera lo más
-baja posible en el árbol reduce el JavaScript enviado al cliente.
+navegador. Hoy solo dos lo son: `ActiveLink` (`usePathname`) y `ElectricBorder`
+(`<canvas>`).
 
-**Organización de componentes.** Un directorio por componente en
-`components/`, en `kebab-case`, con el archivo `.tsx` en `PascalCase` y su
-`.module.css` al lado. Los módulos con varios archivos exponen un `index.ts`.
+**Estilos.** Tailwind exclusivamente; **no se usan CSS Modules**. Cuando una
+clase se repite dentro de un archivo, se extrae a una constante al inicio:
 
-**Estilos.** Tailwind para el grueso de la maquetación; CSS Modules cuando una
-clase se reutiliza con lógica de estado. Todo módulo CSS que use `@apply` debe
-declarar `@reference "../../app/globals.css"`.
+```tsx
+const columnLink = "text-sm text-slate-600 transition-colors hover:text-brand-green";
+```
+
+Para componer clases condicionales existe `cn()` en
+[`lib/utils.ts`](lib/utils.ts) (`clsx` + `tailwind-merge`).
+
+**Contenido.** Ningún dato de la empresa se escribe a mano en un componente.
+Teléfonos, correos, servicios y textos legales salen de
+[`lib/site-config.ts`](lib/site-config.ts).
 
 **Metadata.** El root layout define el `template` del título; cada página
 exporta solo su propio `title` y `description`.
 
-**Idioma.** La interfaz y los textos del sitio están en español (`lang="es"`,
+**Idioma.** La interfaz y los textos están en español (`lang="es"`,
 `locale: "es_CL"`).
 
 **Nota sobre Next.js 16.** Esta versión introduce cambios respecto a versiones
@@ -408,35 +413,45 @@ import Image from "next/image";
 La proporción del logo completo es **5.44:1**; el isotipo es cuadrado. Nunca
 escales un PNG hacia arriba: vuelve siempre al SVG.
 
+> `logo-full.svg` es azul marino casi negro, así que **desaparece sobre fondos
+> oscuros**. Por eso navbar y footer usan fondo claro. Si se necesita el logo
+> sobre el `Backdrop`, hace falta una variante con el texto en blanco.
+
 ---
 
 ## Próximos pasos
 
-Estado del trabajo pendiente. Esta sección se irá actualizando a medida que se
-completen las etapas.
+Ordenado por prioridad.
 
-**Contenido y maquetación**
-- [ ] Diseñar la página de inicio (`app/page.tsx`) con propuesta de valor,
-      servicios y llamado a la acción
-- [ ] Desarrollar el contenido real de *Nosotros*, *Contacto* y *Precios*
-- [ ] Incorporar el logo (`logo-full.svg`) en la barra de navegación
-- [ ] Crear el pie de página (el `<body>` ya está preparado con `flex flex-col`)
+**Alta — el sitio funciona sin esto, pero se nota**
+- [ ] Conectar el envío del formulario (Resend o Formspree) y revertir el estado
+      deshabilitado siguiendo el `TODO` de `form-contact.tsx`
+- [ ] `app/not-found.tsx` — hoy el 404 no lleva navbar ni footer
+- [ ] `app/error.tsx` — sin error boundary, un fallo tumba la ruta completa
+- [ ] `og-image.png` (1200×630): el negocio se mueve por WhatsApp y hoy el link
+      se comparte sin miniatura
 
-**Estructura**
-- [ ] Decidir si la home entra al grupo `(general)` para heredar la `Navbar`,
-      o si mantiene una cabecera propia
+**Media — SEO**
+- [ ] `app/sitemap.ts` y `app/robots.ts`
+- [ ] `metadataBase` en el root layout, hoy ausente: sin él las URLs de Open
+      Graph no se resuelven a absolutas
+- [ ] Mover `icon.png` y `apple-icon.png` de `public/` a `app/`, donde Next 16
+      los detecta por convención y les agrega hash de caché
+- [ ] Unificar el idioma de las URLs: hoy conviven `/about` y `/contact` en
+      inglés con `/privacidad` en español
+
+**Baja — deuda técnica**
+- [ ] El grupo `(general)` solo aplica `Backdrop`, y la home lo repite a mano.
+      O `Backdrop` sube al root layout y el grupo desaparece, o la home entra
+      al grupo
 - [ ] Menú responsive para pantallas pequeñas
+- [ ] Separar en `components/` los primitivos reutilizables (`backdrop`,
+      `active-link`, `electric-border`) de las secciones de una sola página
+      (`about-us`, `hero`, `legal`)
 
-**Estilos**
-- [ ] Reemplazar la paleta por defecto de `globals.css` por los colores de marca
-      documentados en `design/README.md`
-- [ ] Retirar el `font-family: Arial` heredado de la plantilla en el selector
-      `body`, que hoy anula las fuentes Geist cargadas en el root layout
-
-**SEO y despliegue**
-- [ ] Generar `og-image.png` (1200×630) para compartir por WhatsApp y redes
-- [ ] Agregar `metadataBase` y URLs canónicas
-- [ ] Definir plataforma de despliegue y documentar el proceso
+**Despliegue**
+- [ ] Definir plataforma y documentar el proceso
+- [ ] Configurar el dominio y el correo `@energyrex.cl`
 
 ---
 
