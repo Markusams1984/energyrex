@@ -31,18 +31,20 @@ Construido con Next.js 16 (App Router), React 19, TypeScript y Tailwind CSS v4.
 
 ## Stack tecnológico
 
-| Herramienta | Versión | Rol |
-|---|---|---|
-| [Next.js](https://nextjs.org) | 16.3.1 | Framework, App Router, RSC |
-| [React](https://react.dev) | 19.2.8 | Librería de UI |
-| [TypeScript](https://www.typescriptlang.org) | ^5 | Tipado estático (`strict: true`) |
-| [Tailwind CSS](https://tailwindcss.com) | ^4 | Estilos utilitarios vía PostCSS |
-| [lucide-react](https://lucide.dev) | ^1.34.0 | Íconos del footer y del formulario |
-| [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | ^2.1.1 / ^3.6.0 | Helper `cn()` para componer clases |
-| [ESLint](https://eslint.org) | ^9 | Linting (flat config + `core-web-vitals`) |
+| Herramienta | Rol |
+|---|---|
+| [Next.js](https://nextjs.org) | Framework, App Router, RSC |
+| [React](https://react.dev) | Librería de UI |
+| [TypeScript](https://www.typescriptlang.org) | Tipado estático (`strict: true`) |
+| [Tailwind CSS](https://tailwindcss.com) | Estilos utilitarios vía PostCSS |
+| [lucide-react](https://lucide.dev) | Íconos del footer y del formulario |
+| [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | Helper `cn()` para componer clases |
+| [ESLint](https://eslint.org) | Linting (flat config + `core-web-vitals`) |
+
+Las versiones vigentes están en `package.json`.
 
 El proyecto **no usa** librerías de componentes, de animación ni de estado:
-todo el UI es propio. La lista vigente de dependencias está en `package.json`.
+todo el UI es propio.
 
 Fuente: **Geist**, cargada con `next/font/google`.
 
