@@ -15,7 +15,8 @@ interface Props {
 
 /**
  * Fondo de marca EnergyRex: degradado navy → verde con una rejilla
- * enmascarada encima. Compartido por la home y las páginas de (general).
+ * enmascarada encima. Se monta una sola vez, en el layout raíz, así que
+ * toda página lo hereda sin declararlo.
  */
 export const Backdrop = ({ children, as: Tag = "div", className }: Props) => {
   return (

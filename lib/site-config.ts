@@ -37,8 +37,8 @@ export const siteConfig = {
 
 /** Enlaces del menú principal (el logo cubre el enlace a Inicio). */
 export const navItems = [
-  { path: "/about", text: "Nosotros" },
-  { path: "/contact", text: "Contacto" },
+  { path: "/nosotros", text: "Nosotros" },
+  { path: "/contacto", text: "Contacto" },
 ];
 
 /**
@@ -48,7 +48,7 @@ export const navItems = [
 export const footerNavItems = [{ path: "/", text: "Inicio" }, ...navItems];
 
 /**
- * Servicios de la empresa. El `slug` es el ancla dentro de /about, así el
+ * Servicios de la empresa. El `slug` es el ancla dentro de /nosotros, así el
  * footer puede enlazar cada servicio de forma individual (SEO local).
  */
 export const services = [

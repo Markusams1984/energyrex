@@ -84,7 +84,7 @@ export const Footer = () => {
             <ul className="mt-4 space-y-2.5">
               {services.map(({ slug, title }) => (
                 <li key={slug}>
-                  <Link href={`/about#${slug}`} className={columnLink}>
+                  <Link href={`/nosotros#${slug}`} className={columnLink}>
                     {title}
                   </Link>
                 </li>

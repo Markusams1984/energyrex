@@ -118,13 +118,11 @@ npx tsc --noEmit && npm run lint && npm run build
 ```
 energyrex/
 ├── app/                                # App Router
-│   ├── (general)/                      # Grupo de rutas con fondo compartido
-│   │   ├── about/page.tsx              # /about      — Nosotros
-│   │   ├── contact/page.tsx            # /contact    — Contacto
-│   │   ├── privacidad/page.tsx         # /privacidad — Política de Privacidad
-│   │   └── layout.tsx                  # Envuelve el grupo en <Backdrop>
+│   ├── nosotros/page.tsx               # /nosotros   — Nosotros
+│   ├── contacto/page.tsx               # /contacto   — Contacto
+│   ├── privacidad/page.tsx             # /privacidad — Política de Privacidad
 │   ├── globals.css                     # Tema Tailwind v4 y paleta de marca
-│   ├── layout.tsx                      # Root layout: fuente, metadata, Navbar y Footer
+│   ├── layout.tsx                      # Root layout: fuente, metadata, Navbar, Backdrop y Footer
 │   └── page.tsx                        # /           — Home
 ├── components/                         # Un directorio por componente + barrel
 │   ├── about-us/                       # Sección de la página Nosotros
@@ -168,12 +166,16 @@ Todas las rutas se prerenderizan como contenido estático en el build.
 | Ruta | Página | Título | Componentes |
 |---|---|---|---|
 | `/` | [`app/page.tsx`](app/page.tsx) | *(por defecto)* | `HeroElectric`, `Hero` |
-| `/about` | [`app/(general)/about/page.tsx`](app/(general)/about/page.tsx) | Nosotros | `AboutUs` |
-| `/contact` | [`app/(general)/contact/page.tsx`](app/(general)/contact/page.tsx) | Contacto | `InfoContact`, `FormContact` |
-| `/privacidad` | [`app/(general)/privacidad/page.tsx`](app/(general)/privacidad/page.tsx) | Política de Privacidad | `PrivacyPolicy` |
+| `/nosotros` | [`app/nosotros/page.tsx`](app/nosotros/page.tsx) | Nosotros | `AboutUs` |
+| `/contacto` | [`app/contacto/page.tsx`](app/contacto/page.tsx) | Contacto | `InfoContact`, `FormContact` |
+| `/privacidad` | [`app/privacidad/page.tsx`](app/privacidad/page.tsx) | Política de Privacidad | `PrivacyPolicy` |
 
-El grupo `(general)` no aparece en la URL: solo envuelve sus páginas en
-`<Backdrop as="main">`. La home aplica el mismo `Backdrop` por su cuenta.
+Las URLs están en español, igual que el contenido del sitio.
+
+No hay grupos de rutas: el layout raíz envuelve `children` en
+`<Backdrop as="main">`, así que **toda** página hereda el fondo de marca sin
+declararlo. Navbar y footer quedan fuera del `Backdrop` y conservan su fondo
+claro.
 
 ---
 
@@ -193,18 +195,18 @@ export const siteConfig = {
 
 export const navItems       // menú del navbar
 export const footerNavItems // navItems + Inicio
-export const services       // servicios, con slug para anclas en /about
+export const services       // servicios, con slug para anclas en /nosotros
 ```
 
 Detalles que conviene conocer antes de editarlo:
 
 - **`certification` tiene dos redacciones a propósito.** `short` va en el badge
-  del footer; `full` en la ficha formal de `/contact`. Ambas son correctas y
+  del footer; `full` en la ficha formal de `/contacto`. Ambas son correctas y
   **no deben unificarse**.
 - **`phone` y `phoneE164` son el mismo número.** El primero es legible; el
   segundo alimenta `href="tel:"`, que no admite espacios.
-- **`services[].slug`** hace doble trabajo: es el `id` de la tarjeta en `/about`
-  y el ancla del enlace del footer (`/about#energia-solar`).
+- **`services[].slug`** hace doble trabajo: es el `id` de la tarjeta en
+  `/nosotros` y el ancla del enlace del footer (`/nosotros#energia-solar`).
 - **`legal.politicaActualizada`** es la fecha que muestra el pie de la política.
   Actualízala cada vez que cambie el texto legal.
 
@@ -289,10 +291,7 @@ Se separaron los archivos de origen de los que consume el sitio: **`design/`**
 guarda el material fuente no regenerable; **`public/`** lo que el sitio sirve.
 La documentación de marca vive en [`design/README.md`](design/README.md).
 
-### Etapa 4 — Grupo de rutas `(general)`, navbar y `ActiveLink`
-
-Los paréntesis crean un **grupo de rutas**: organiza archivos y comparte layout
-**sin** aparecer en la URL.
+### Etapa 4 — Navbar y `ActiveLink`
 
 [`components/navbar/navbar.tsx`](components/navbar/navbar.tsx) es un **Server
 Component** y delega cada enlace en
@@ -341,6 +340,16 @@ El motivo: la Server Action `enviarMensaje` nunca envió correo — solo imprim�
 en el log del servidor. El formulario fallaba en silencio y el visitante creía
 haber escrito. Ver el `TODO` en
 [`form-contact.tsx`](components/contact/form-contact.tsx) para conectarlo.
+
+### Etapa 10 — URLs en español y `Backdrop` único
+
+Se eliminó el grupo de rutas `(general)`: su layout solo aplicaba `Backdrop`, y
+la home lo repetía por su cuenta. Ahora `Backdrop` vive una sola vez, en el
+layout raíz, y toda página lo hereda.
+
+Las rutas se tradujeron con `git mv` para que Git registre los movimientos:
+`/about` → `/nosotros` y `/contact` → `/contacto`. No se agregaron redirects
+porque el sitio aún no está publicado ni indexado.
 
 ---
 
@@ -440,13 +449,8 @@ Ordenado por prioridad.
       Graph no se resuelven a absolutas
 - [ ] Mover `icon.png` y `apple-icon.png` de `public/` a `app/`, donde Next 16
       los detecta por convención y les agrega hash de caché
-- [ ] Unificar el idioma de las URLs: hoy conviven `/about` y `/contact` en
-      inglés con `/privacidad` en español
 
 **Baja — deuda técnica**
-- [ ] El grupo `(general)` solo aplica `Backdrop`, y la home lo repite a mano.
-      O `Backdrop` sube al root layout y el grupo desaparece, o la home entra
-      al grupo
 - [ ] Menú responsive para pantallas pequeñas
 - [ ] Separar en `components/` los primitivos reutilizables (`backdrop`,
       `active-link`, `electric-border`) de las secciones de una sola página
