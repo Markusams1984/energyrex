@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Backdrop } from "@/components/backdrop";
+import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +21,7 @@ const SITE_DESCRIPTION =
   "Instalador eléctrico certificado SEC. Proyectos, instalaciones residenciales, comerciales e industriales y certificación TE1, TE2 y TE3.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://energyrex.cl"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: SITE_TITLE,
     template: "%s | EnergyRex",

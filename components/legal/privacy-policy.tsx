@@ -3,6 +3,18 @@ import { siteConfig } from "@/lib/site-config";
 
 const { certification, contact, legal, responsable } = siteConfig;
 
+/**
+ * La fecha vive en el config como ISO (la comparte con el sitemap); aquí se
+ * formatea para leerla en español. `timeZone: "UTC"` evita que el día se corra
+ * al interpretar una fecha sin hora.
+ */
+const politicaActualizada = new Intl.DateTimeFormat("es-CL", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${legal.politicaActualizada}T00:00:00Z`));
+
 const sections = [
   {
     title: "1. Responsable del tratamiento",
@@ -104,7 +116,7 @@ export const PrivacyPolicy = () => {
         </div>
 
         <p className="mt-8 text-sm text-slate-400">
-          Última actualización: {legal.politicaActualizada}
+          Última actualización: {politicaActualizada}
         </p>
       </div>
     </section>

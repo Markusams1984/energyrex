@@ -3,8 +3,20 @@
  * La consumen el navbar, el footer, la página "Sobre nosotros" y la política
  * de privacidad, para no duplicar teléfonos, correos ni enlaces.
  */
+/**
+ * El dominio, escrito una sola vez en todo el proyecto. De aquí salen tanto la
+ * URL del sitio como el correo de contacto: si algún día se migra el dominio,
+ * los dos se mueven juntos y no queda ninguno apuntando al viejo.
+ */
+const DOMAIN = "energyrex.cl";
+
 export const siteConfig = {
   name: "EnergyRex",
+  /**
+   * URL canónica, sin barra final. La consumen `metadataBase` en
+   * `app/layout.tsx`, `app/sitemap.ts` y `app/robots.ts`.
+   */
+  url: `https://${DOMAIN}`,
   tagline:
     "Ingeniería, ejecución y certificación de instalaciones eléctricas y fotovoltaicas.",
   responsable: "Matías Farías González",
@@ -23,15 +35,21 @@ export const siteConfig = {
   legal: {
     razonSocial: "EnergyRex SpA",
     rut: "78.470.849-7",
-    /** Fecha de la última revisión de la política de privacidad. */
-    politicaActualizada: "27 de agosto de 2026",
+    /**
+     * Fecha de la última revisión de la política de privacidad, en ISO 8601.
+     * Se guarda como fecha y no como texto porque tiene dos consumidores: la
+     * propia página, que la formatea en español, y `app/sitemap.ts`, que la usa
+     * como `lastModified` de /privacidad. Al revisar la política, cambia esta
+     * línea y los dos quedan al día.
+     */
+    politicaActualizada: "2026-08-27",
   },
   contact: {
     phone: "+56 9 3003 7134",
     /** Mismo número en formato E.164 para el enlace tel:. */
     phoneE164: "+56930037134",
     whatsapp: "https://wa.me/56930037134",
-    email: "mfarias@energyrex.cl",
+    email: `mfarias@${DOMAIN}`,
   },
 };
 
