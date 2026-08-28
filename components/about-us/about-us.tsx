@@ -1,25 +1,15 @@
+import { PageHeader } from "@/components/page-header";
 import { services } from "@/lib/site-config";
 
 export const AboutUs = () => {
   return (
     <section className="relative flex flex-1 items-center">
       <div className="relative mx-auto w-full max-w-1400px px-6 py-24 sm:px-10 lg:py-28">
-        <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-logo uppercase">
-          <span className="h-px w-7 bg-brand-logo" aria-hidden="true" />
-          Quiénes somos
-        </p>
-
-        <h1 className="mt-7 max-w-full text-6xl leading-[0.98] font-extrabold tracking-tight text-white sm:text-7xl lg:max-w-[60vw] lg:text-8xl">
-          Sobre Nosotros
-        </h1>
-
-        <p className="mt-7 max-w-full text-lg leading-relaxed text-slate-300 lg:max-w-[60vw]">
-          Somos especialistas en ingeniería, ejecución y regularización de
-          proyectos eléctricos, energía solar fotovoltaica y sistemas de
-          seguridad. Desarrollamos soluciones integrales para el sector
-          residencial, comercial e industrial, garantizando instalaciones
-          seguras, eficientes y alineadas con la normativa técnica vigente.
-        </p>
+        <PageHeader
+          eyebrow="Quiénes somos"
+          title="Sobre Nosotros"
+          intro="Somos especialistas en ingeniería, ejecución y regularización de proyectos eléctricos, energía solar fotovoltaica y sistemas de seguridad. Desarrollamos soluciones integrales para el sector residencial, comercial e industrial, garantizando instalaciones seguras, eficientes y alineadas con la normativa técnica vigente."
+        />
 
         <p className="mt-5 max-w-full text-lg leading-relaxed text-slate-300 lg:max-w-[60vw]">
           Bajo la dirección de{" "}

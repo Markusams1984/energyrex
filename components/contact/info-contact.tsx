@@ -1,5 +1,6 @@
 
 
+import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/lib/site-config";
 
 const { certification, contact } = siteConfig;
@@ -23,20 +24,11 @@ export const InfoContact = () => {
   return (
     <section className="relative">
       <div className="mx-auto w-full max-w-[1400px] px-6 pt-24 pb-12 sm:px-10 lg:pt-28">
-        <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-logo uppercase">
-          <span className="h-px w-7 bg-brand-logo" aria-hidden="true" />
-          Cotizaciones sin costo
-        </p>
-
-        <h1 className="mt-7 max-w-full text-6xl leading-[0.98] font-extrabold tracking-tight text-white sm:text-7xl lg:max-w-[60vw] lg:text-8xl">
-          Contáctanos
-        </h1>
-
-        <p className="mt-7 max-w-full text-lg leading-relaxed text-slate-300 lg:max-w-[60vw]">
-          ¿Tienes un proyecto en mente, necesitas regularizar tu instalación o
-          requieres atención técnica? Comunícate directamente con nosotros para
-          evaluar tu requerimiento y entregarte una cotización a medida.
-        </p>
+        <PageHeader
+          eyebrow="Cotizaciones sin costo"
+          title="Contáctanos"
+          intro="¿Tienes un proyecto en mente, necesitas regularizar tu instalación o requieres atención técnica? Comunícate directamente con nosotros para evaluar tu requerimiento y entregarte una cotización a medida."
+        />
 
         <h2 className="mt-12 text-2xl font-semibold tracking-tight text-white">
           Información de Contacto

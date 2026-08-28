@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { footerNavItems, services, siteConfig } from "@/lib/site-config";
+import { LIGHT_BAND } from "@/lib/styles";
 
 const { certification, contact, legal } = siteConfig;
 
@@ -18,7 +19,7 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-gradient-to-r from-brand-mist to-[#dde7e3] font-sans">
+    <footer className={LIGHT_BAND}>
       <div
         className="h-px w-full bg-gradient-to-r from-brand-logo via-brand-mint to-transparent"
         aria-hidden="true"

@@ -1,3 +1,4 @@
+import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/lib/site-config";
 
 const { certification, contact, legal, responsable } = siteConfig;
@@ -68,20 +69,18 @@ export const PrivacyPolicy = () => {
   return (
     <section className="relative">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
-        <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-logo uppercase">
-          <span className="h-px w-7 bg-brand-logo" aria-hidden="true" />
-          Información legal
-        </p>
-
-        <h1 className="mt-7 max-w-full text-5xl leading-[1] font-extrabold tracking-tight text-white sm:text-6xl lg:max-w-[60vw]">
-          Política de Privacidad
-        </h1>
-
-        <p className="mt-7 max-w-full text-lg leading-relaxed text-slate-300 lg:max-w-[60vw]">
-          En {siteConfig.name} tratamos tus datos personales con la reserva que
-          exige la normativa chilena. Aquí explicamos qué información
-          recopilamos, para qué la usamos y cómo puedes controlarla.
-        </p>
+        <PageHeader
+          variant="document"
+          eyebrow="Información legal"
+          title="Política de Privacidad"
+          intro={
+            <>
+              En {siteConfig.name} tratamos tus datos personales con la reserva
+              que exige la normativa chilena. Aquí explicamos qué información
+              recopilamos, para qué la usamos y cómo puedes controlarla.
+            </>
+          }
+        />
 
         <div className="mt-12 grid max-w-full gap-5 lg:max-w-[60vw]">
           {sections.map(({ title, body }) => (

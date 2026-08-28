@@ -8,9 +8,11 @@ const BRAND_GRID =
 
 interface Props {
   children: React.ReactNode;
-  /** Etiqueta HTML que envuelve el contenido. */
+  /**
+   * Etiqueta HTML que envuelve el contenido. El fondo es decorativo, así que
+   * la semántica la decide quien lo monta, no este componente.
+   */
   as?: "main" | "section" | "div";
-  className?: string;
 }
 
 /**
@@ -18,13 +20,12 @@ interface Props {
  * enmascarada encima. Se monta una sola vez, en el layout raíz, así que
  * toda página lo hereda sin declararlo.
  */
-export const Backdrop = ({ children, as: Tag = "div", className }: Props) => {
+export const Backdrop = ({ children, as: Tag = "div" }: Props) => {
   return (
     <Tag
       className={cn(
-        "relative flex flex-1 flex-col overflow-hidden font-sans",
+        "relative flex flex-1 flex-col overflow-hidden",
         BRAND_GRADIENT,
-        className,
       )}
     >
       <div

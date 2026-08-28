@@ -18,6 +18,7 @@
   --color-brand-mint: #35d08c;
   --color-brand-logo: #0a6647; /* verde exacto del logo-full.svg */
   --color-brand-mist: #ecefee;
+  --color-brand-mist-deep: #dde7e3; /* cierre del degradado de navbar y footer */
 }
 
 /* Los cuatro tokens que consume @layer base. */
