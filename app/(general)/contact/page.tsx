@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { FormContact, InfoContact } from "@/components/contact";
+import { siteConfig } from "@/lib/site-config";
+
+const { contact } = siteConfig;
 
 export const metadata: Metadata = {
   title: "Contacto",
-  description:
-    "Contacta a EnergyRex por WhatsApp al +56 9 3003 7134 o escríbenos a mfarias.elec@gmail.com. Cotizaciones sin costo para tu proyecto eléctrico.",
+  description: `Contacta a ${siteConfig.name} por WhatsApp al ${contact.phone} o escríbenos a ${contact.email}. Cotizaciones sin costo para tu proyecto eléctrico.`,
 };
 
 export default function ContactPage() {

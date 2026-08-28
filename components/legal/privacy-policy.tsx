@@ -1,6 +1,6 @@
 import { siteConfig } from "@/lib/site-config";
 
-const { contact, legal, responsable } = siteConfig;
+const { certification, contact, legal, responsable } = siteConfig;
 
 const sections = [
   {
@@ -28,7 +28,7 @@ const sections = [
   {
     title: "4. Comunicación a terceros",
     body: [
-      "No vendemos, arrendamos ni cedemos tus datos personales a terceros con fines comerciales. Solo podrán ser comunicados cuando sea necesario para ejecutar el servicio que nos encargas o cuando lo exija una obligación legal o un requerimiento de autoridad competente, como la Superintendencia de Electricidad y Combustibles (SEC).",
+      `No vendemos, arrendamos ni cedemos tus datos personales a terceros con fines comerciales. Solo podrán ser comunicados cuando sea necesario para ejecutar el servicio que nos encargas o cuando lo exija una obligación legal o un requerimiento de autoridad competente, como la ${certification.organismo} (SEC).`,
     ],
   },
   {

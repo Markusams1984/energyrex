@@ -1,17 +1,21 @@
 
 
+import { siteConfig } from "@/lib/site-config";
+
+const { certification, contact } = siteConfig;
+
 const contactDetails = [
-  { label: "Responsable Técnico", value: "Matías Farías González" },
-  { label: "Acreditación", value: "Instalador Eléctrico Certificado SEC" },
+  { label: "Responsable Técnico", value: siteConfig.responsable },
+  { label: "Acreditación", value: certification.full },
   {
     label: "Teléfono / WhatsApp",
-    value: "+56 9 3003 7134",
-    href: "https://wa.me/56930037134",
+    value: contact.phone,
+    href: contact.whatsapp,
   },
   {
     label: "Correo Electrónico",
-    value: "mfarias.elec@gmail.com",
-    href: "mailto:mfarias.elec@gmail.com",
+    value: contact.email,
+    href: `mailto:${contact.email}`,
   },
 ];
 

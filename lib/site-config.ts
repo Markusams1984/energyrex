@@ -8,8 +8,17 @@ export const siteConfig = {
   tagline:
     "Ingeniería, ejecución y certificación de instalaciones eléctricas y fotovoltaicas.",
   responsable: "Matías Farías González",
-  /** Acreditación oficial que se muestra en el footer. */
-  certification: "Certificado por la SEC",
+  /**
+   * Acreditación oficial. Dos redacciones distintas y ambas correctas:
+   * `short` para el badge del footer, `full` para la ficha formal.
+   */
+  certification: {
+    /** Badge del footer. */
+    short: "Certificado por la SEC",
+    /** Acreditación formal (ficha de contacto). */
+    full: "Instalador Eléctrico Certificado SEC",
+    organismo: "Superintendencia de Electricidad y Combustibles",
+  },
   /** Identificación legal exigible a un sitio comercial chileno. */
   legal: {
     razonSocial: "EnergyRex SpA",
@@ -22,7 +31,7 @@ export const siteConfig = {
     /** Mismo número en formato E.164 para el enlace tel:. */
     phoneE164: "+56930037134",
     whatsapp: "https://wa.me/56930037134",
-    email: "mfarias.elec@gmail.com",
+    email: "mfarias@energyrex.cl",
   },
 };
 

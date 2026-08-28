@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { footerNavItems, services, siteConfig } from "@/lib/site-config";
 
-const { contact, legal } = siteConfig;
+const { certification, contact, legal } = siteConfig;
 
 const columnTitle =
   "text-xs font-semibold tracking-[0.18em] text-brand-logo uppercase";
@@ -50,7 +50,7 @@ export const Footer = () => {
                 className="size-4 shrink-0 text-brand-logo"
                 aria-hidden="true"
               />
-              {siteConfig.certification}
+              {certification.short}
             </p>
 
             <a
