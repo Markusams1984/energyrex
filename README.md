@@ -123,6 +123,13 @@ energyrex/
 │   ├── privacidad/page.tsx             # /privacidad — Política de Privacidad
 │   ├── globals.css                     # Tema Tailwind v4 y paleta de marca
 │   ├── layout.tsx                      # Root layout: fuente, metadata, Navbar, Backdrop y Footer
+│   ├── error.tsx                       # Error de renderizado (Client Component)
+│   ├── not-found.tsx                   # Página 404
+│   ├── robots.ts                       # /robots.txt
+│   ├── sitemap.ts                      # /sitemap.xml
+│   ├── icon.png                        # Favicon 512×512   — por convención
+│   ├── apple-icon.png                  # Ícono iOS 180×180 — por convención
+│   ├── opengraph-image.png             # Miniatura 1200×630 — por convención
 │   └── page.tsx                        # /           — Home
 ├── components/                         # Un directorio por componente + barrel
 │   ├── about-us/                       # Sección de la página Nosotros
@@ -142,9 +149,7 @@ energyrex/
 │   └── logo-full-source.jpg            # JPEG original del logo completo
 ├── public/                             # Assets servidos estáticamente
 │   ├── logo.svg                        # Isotipo
-│   ├── logo-full.svg                   # Logo completo
-│   ├── icon.png                        # Favicon 512×512
-│   └── apple-icon.png                  # Ícono iOS 180×180
+│   └── logo-full.svg                   # Logo completo
 ├── AGENTS.md                           # Instrucciones para agentes de IA
 ├── components.json                     # Config de shadcn (ver nota abajo)
 ├── eslint.config.mjs
@@ -444,10 +449,9 @@ Ordenado por prioridad.
       se comparte sin miniatura
 
 **Media — SEO**
-- [ ] `app/sitemap.ts` y `app/robots.ts`
-- [ ] `metadataBase` en el root layout, hoy ausente: sin él las URLs de Open
-      Graph no se resuelven a absolutas
-- [ ] Mover `icon.png` y `apple-icon.png` de `public/` a `app/`, donde Next 16
+- [x] `app/sitemap.ts` y `app/robots.ts`
+- [x] `metadataBase` en el root layout
+- [x] Mover `icon.png` y `apple-icon.png` de `public/` a `app/`, donde Next 16
       los detecta por convención y les agrega hash de caché
 
 **Baja — deuda técnica**

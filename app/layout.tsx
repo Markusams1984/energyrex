@@ -27,10 +27,8 @@ export const metadata: Metadata = {
     template: "%s | EnergyRex",
   },
   description: SITE_DESCRIPTION,
-  icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png"
-  },
+  // `icons` tampoco se declara: Next los resuelve por convención desde
+  // `app/icon.png` y `app/apple-icon.png`, igual que la imagen de Open Graph.
   /**
    * OJO con la herencia: una página hereda este bloque completo solo mientras
    * no declare el suyo. Si una página define `openGraph`, REEMPLAZA este

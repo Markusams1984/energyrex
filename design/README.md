@@ -29,12 +29,23 @@ Esta carpeta **no se sirve al público**: Next solo publica lo que está en
 |---|---|---|
 | `logo.svg` | Isotipo (la S), vectorial | Usos sueltos dentro del sitio |
 | `logo-full.svg` | Logo completo, vectorial, 13 KB | Cabecera, pie de página |
-| `icon.png` | 512×512, transparente | Ícono de la pestaña del navegador |
-| `apple-icon.png` | 180×180, fondo blanco | Pantalla de inicio en iOS |
 
 Los SVG son los maestros: el mismo archivo sirve para 200 px o para 2000 px,
-sin exportar nada. Los PNG existen solo porque el favicon y iOS exigen ese
-formato.
+sin exportar nada.
+
+## `app/` — los que Next detecta por convención
+
+No van en `public/`. Next los descubre por su nombre de archivo, genera las
+etiquetas del `<head>` solo y les agrega un hash de caché a la URL, así que
+tampoco se declaran en `metadata`.
+
+| Archivo | Qué es | Para qué |
+|---|---|---|
+| `icon.png` | 512×512, transparente | Ícono de la pestaña del navegador |
+| `apple-icon.png` | 180×180, fondo blanco | Pantalla de inicio en iOS |
+| `opengraph-image.png` | 1200×630 | Miniatura al compartir el link (ver abajo) |
+
+Los PNG existen solo porque el favicon y iOS exigen ese formato.
 
 ## Cómo usar el logo en el sitio
 
@@ -52,8 +63,12 @@ La proporción del logo completo es **5.44:1** (2400×441). Respétala al elegir
 Con `rsvg-convert` (`brew install librsvg`):
 
 ```bash
-rsvg-convert -w 512 -h 512 public/logo.svg -o public/icon.png
+rsvg-convert -w 512 -h 512 public/logo.svg -o app/icon.png
 ```
+
+Ojo con el destino: el SVG de origen vive en `public/`, pero el ícono de salida
+va en `app/`. Si lo escribes en `public/` queda un archivo muerto y la pestaña
+sigue mostrando el anterior.
 
 `apple-icon.png` debe quedar **opaco** — iOS rellena la transparencia con
 negro. Ponle fondo blanco después de exportarlo.
