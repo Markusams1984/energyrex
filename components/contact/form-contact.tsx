@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { CTA_PRIMARY } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 const { contact } = siteConfig;
 
@@ -111,7 +113,10 @@ export const FormContact = () => {
           <button
             type="submit"
             disabled
-            className="mt-8 w-full rounded-lg bg-brand-mint px-6 py-3 font-semibold text-brand-navy transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand-mint sm:w-auto"
+            className={cn(
+              CTA_PRIMARY,
+              "mt-8 w-full disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand-mint sm:w-auto",
+            )}
           >
             Formulario en preparación
           </button>
