@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { ElectricBorder } from "@/components/electric-border";
+import { SECTION_CONTAINER } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site-config";
 
 /** Lienzo interior del hero: la marca EnergyRex en clave "eléctrica". */
 export const HeroElectric = () => {
   return (
     <section className="relative flex flex-1 items-center">
-      <div className="relative mx-auto flex w-full max-w-[1400px] flex-col items-center px-6 py-24 sm:px-10 lg:py-28">
+      <div className={cn(SECTION_CONTAINER, "relative flex flex-col items-center py-24 lg:py-28")}>
         <ElectricBorder color="#7df9ff" speed={1} chaos={0.12} borderRadius={16}>
           <div className="relative flex h-64 w-[85vw] max-w-3xl items-center justify-center overflow-hidden rounded-[16px] bg-[image:radial-gradient(110%_130%_at_50%_0%,rgba(125,249,255,0.16)_0%,transparent_55%),radial-gradient(90%_120%_at_88%_100%,rgba(53,208,140,0.22)_0%,transparent_62%),linear-gradient(155deg,#07121e_0%,var(--color-brand-navy)_48%,#072318_100%)] sm:h-80 lg:h-96">
             {/* Rejilla enmascarada */}

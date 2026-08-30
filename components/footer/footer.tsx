@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { footerNavItems, services, siteConfig } from "@/lib/site-config";
-import { LIGHT_BAND } from "@/lib/styles";
+import { LIGHT_BAND, SECTION_CONTAINER } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 const { certification, contact, legal } = siteConfig;
 
@@ -20,7 +21,7 @@ export const Footer = () => {
         aria-hidden="true"
       />
 
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-10 sm:px-10">
+      <div className={cn(SECTION_CONTAINER, "py-10")}>
         <div className="grid gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1.1fr_1.1fr]">
           {/* Marca, credibilidad y CTA */}
           <div>

@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ActiveLink } from "@/components/active-link";
 import { navItems, siteConfig } from "@/lib/site-config";
-import { LIGHT_BAND } from "@/lib/styles";
+import { LIGHT_BAND, SECTION_CONTAINER } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
   return (
     <header className={LIGHT_BAND}>
-      <nav className="mx-auto flex h-[76px] w-full max-w-[1400px] items-center gap-8 px-6 sm:px-10">
+      <nav className={cn(SECTION_CONTAINER, "flex h-[76px] items-center gap-8")}>
         <Link
           href="/"
           aria-label={`${siteConfig.name} - Inicio`}

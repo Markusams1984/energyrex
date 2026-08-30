@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
-import { CTA_PRIMARY, CTA_SECONDARY } from "@/lib/styles";
+import { CTA_PRIMARY, CTA_SECONDARY, SECTION_CONTAINER } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 /**
  * 404 del sitio. Es un Server Component y no necesita nada más: al vivir en la
@@ -10,7 +11,7 @@ import { CTA_PRIMARY, CTA_SECONDARY } from "@/lib/styles";
 export default function NotFound() {
   return (
     <section className="relative flex flex-1 items-center">
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
+      <div className={cn(SECTION_CONTAINER, "relative py-24 lg:py-28")}>
         <PageHeader
           eyebrow="Error 404"
           title="Página no encontrada"

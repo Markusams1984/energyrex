@@ -1,10 +1,12 @@
 import { PageHeader } from "@/components/page-header";
 import { services } from "@/lib/site-config";
+import { SECTION_CONTAINER, SURFACE_CARD } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 export const AboutUs = () => {
   return (
     <section className="relative flex flex-1 items-center">
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
+      <div className={cn(SECTION_CONTAINER, "relative py-24 lg:py-28")}>
         <PageHeader
           eyebrow="Quiénes somos"
           title="Sobre Nosotros"
@@ -25,7 +27,7 @@ export const AboutUs = () => {
             <li
               key={slug}
               id={slug}
-              className="scroll-mt-28 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              className={cn(SURFACE_CARD, "scroll-mt-28")}
             >
               <h2 className="text-lg font-semibold tracking-tight text-brand-mint">
                 {title}

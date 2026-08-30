@@ -1,5 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/lib/site-config";
+import { SECTION_CONTAINER, SURFACE_CARD } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 const { certification, contact } = siteConfig;
 
@@ -27,7 +29,7 @@ const contactDetails = [
 export const InfoContact = () => {
   return (
     <section className="relative">
-      <div className="mx-auto w-full max-w-[1400px] px-6 pt-24 pb-12 sm:px-10 lg:pt-28">
+      <div className={cn(SECTION_CONTAINER, "pt-24 pb-12 lg:pt-28")}>
         <PageHeader
           eyebrow="Cotizaciones sin costo"
           title="Contáctanos"
@@ -42,7 +44,7 @@ export const InfoContact = () => {
           {contactDetails.map(({ label, value, href, external }) => (
             <div
               key={label}
-              className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              className={SURFACE_CARD}
             >
               <dt className="text-xs font-semibold tracking-[0.14em] text-brand-mint uppercase">
                 {label}

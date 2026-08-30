@@ -1,5 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/lib/site-config";
+import { SECTION_CONTAINER, SURFACE_CARD } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 const { certification, contact, legal, responsable } = siteConfig;
 
@@ -83,7 +85,7 @@ const sections = [
 export const PrivacyPolicy = () => {
   return (
     <section className="relative">
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
+      <div className={cn(SECTION_CONTAINER, "py-24 lg:py-28")}>
         <PageHeader
           variant="document"
           eyebrow="Información legal"
@@ -101,7 +103,7 @@ export const PrivacyPolicy = () => {
           {sections.map(({ title, body }) => (
             <article
               key={title}
-              className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              className={SURFACE_CARD}
             >
               <h2 className="text-lg font-semibold tracking-tight text-brand-mint">
                 {title}

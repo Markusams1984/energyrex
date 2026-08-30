@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
-import { CTA_PRIMARY } from "@/lib/styles";
+import { CTA_PRIMARY, SECTION_CONTAINER } from "@/lib/styles";
 import { cn } from "@/lib/utils";
 
 const { contact } = siteConfig;
@@ -38,7 +38,7 @@ export const FormContact = () => {
 
   return (
     <section className="relative">
-      <div className="mx-auto w-full max-w-[1400px] px-6 pb-24 sm:px-10 lg:pb-28">
+      <div className={cn(SECTION_CONTAINER, "pb-24 lg:pb-28")}>
         <form
           action={enviarMensaje}
           className="rounded-2xl border border-white/10 bg-brand-navy/60 p-6 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-8"

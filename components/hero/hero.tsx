@@ -1,7 +1,10 @@
+import { SECTION_CONTAINER } from "@/lib/styles";
+import { cn } from "@/lib/utils";
+
 export const Hero = () => {
   return (
     <section className="relative flex flex-1 items-center">
-      <div className="relative mx-auto flex w-full max-w-[1400px] flex-col items-center px-6 py-24 sm:px-10 lg:py-28">
+      <div className={cn(SECTION_CONTAINER, "relative flex flex-col items-center py-24 lg:py-28")}>
         <div className="w-full text-center">
           <p className="flex items-center justify-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-mint uppercase">
             <span className="h-px w-7 bg-brand-mint" aria-hidden="true" />

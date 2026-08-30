@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/lib/site-config";
-import { CTA_PRIMARY, CTA_SECONDARY } from "@/lib/styles";
+import { CTA_PRIMARY, CTA_SECONDARY, SECTION_CONTAINER } from "@/lib/styles";
+import { cn } from "@/lib/utils";
 
 const { contact } = siteConfig;
 
@@ -36,7 +37,7 @@ export default function ErrorBoundary({ error, retry }: Props) {
 
   return (
     <section className="relative flex flex-1 items-center">
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
+      <div className={cn(SECTION_CONTAINER, "relative py-24 lg:py-28")}>
         <PageHeader
           eyebrow="Error"
           title="Algo salió mal"
