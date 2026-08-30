@@ -37,8 +37,8 @@ export const PageHeader = ({
 }: Props) => {
   return (
     <>
-      <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-logo uppercase">
-        <span className="h-px w-7 bg-brand-logo" aria-hidden="true" />
+      <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.18em] text-brand-mint uppercase">
+        <span className="h-px w-7 bg-brand-mint" aria-hidden="true" />
         {eyebrow}
       </p>
 

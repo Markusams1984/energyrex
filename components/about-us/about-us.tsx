@@ -4,7 +4,7 @@ import { services } from "@/lib/site-config";
 export const AboutUs = () => {
   return (
     <section className="relative flex flex-1 items-center">
-      <div className="relative mx-auto w-full max-w-1400px px-6 py-24 sm:px-10 lg:py-28">
+      <div className="relative mx-auto w-full max-w-[1400px] px-6 py-24 sm:px-10 lg:py-28">
         <PageHeader
           eyebrow="Quiénes somos"
           title="Sobre Nosotros"

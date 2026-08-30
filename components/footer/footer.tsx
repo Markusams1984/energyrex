@@ -127,7 +127,7 @@ export const Footer = () => {
                 </a>
               </li>
             </ul>
-            <p className="mt-4 text-xs leading-relaxed text-slate-500">
+            <p className="mt-4 text-xs leading-relaxed text-slate-600">
               Responsable técnico
               <br />
               {siteConfig.responsable}
@@ -136,7 +136,7 @@ export const Footer = () => {
         </div>
 
         {/* Identificación legal y copyright */}
-        <div className="mt-9 flex flex-col gap-2 border-t border-brand-ink/10 pt-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-9 flex flex-col gap-2 border-t border-brand-ink/10 pt-5 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {siteConfig.name}. Todos los derechos reservados.
           </p>
