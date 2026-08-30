@@ -11,13 +11,8 @@ const columnTitle =
 const columnLink =
   "text-sm text-slate-600 transition-colors hover:text-brand-green";
 
-/**
- * Pie de página global. Server Component: el año se resuelve en el render,
- * sin JavaScript en el cliente.
- */
+/** Pie de página global. */
 export const Footer = () => {
-  const year = new Date().getFullYear();
-
   return (
     <footer className={LIGHT_BAND}>
       <div
@@ -138,7 +133,7 @@ export const Footer = () => {
         {/* Identificación legal y copyright */}
         <div className="mt-9 flex flex-col gap-2 border-t border-brand-ink/10 pt-5 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {siteConfig.name}. Todos los derechos reservados.
+            © {legal.razonSocial}. Todos los derechos reservados.
           </p>
           <p>
             {legal.razonSocial} · RUT {legal.rut}

@@ -146,9 +146,10 @@ energyrex/
 │   └── utils.ts                        # Helper cn()
 ├── design/                             # Archivos fuente de diseño (no se publican)
 │   ├── README.md                       # Guía de recursos gráficos y marca
+│   ├── generate-og-image.mjs           # Genera app/opengraph-image.png
+│   ├── logo.svg                        # Isotipo: fuente del favicon
 │   └── logo-full-source.jpg            # JPEG original del logo completo
 ├── public/                             # Assets servidos estáticamente
-│   ├── logo.svg                        # Isotipo
 │   └── logo-full.svg                   # Logo completo
 ├── AGENTS.md                           # Instrucciones para agentes de IA
 ├── components.json                     # Config de shadcn (ver nota abajo)

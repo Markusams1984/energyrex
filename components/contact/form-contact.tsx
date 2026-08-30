@@ -29,6 +29,10 @@ export const FormContact = () => {
     // texto "Enviar mensaje", eliminar el párrafo de "Formulario en
     // preparación", y actualizar la sección 2 de privacy-policy.tsx
     // quitando la frase sobre el formulario deshabilitado.
+    // Al conectar el envío, agregar también: validación de los datos en
+    // servidor, límite de envíos por IP, y campo honeypot contra bots.
+    // El disabled del formulario no protege esta función: es un endpoint
+    // público desde que existe.
     console.log("Nuevo mensaje de contacto:", datos);
   }
 

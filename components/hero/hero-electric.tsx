@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ElectricBorder } from "@/components/electric-border";
+import { siteConfig } from "@/lib/site-config";
 
 /** Lienzo interior del hero: la marca EnergyRex en clave "eléctrica". */
 export const HeroElectric = () => {
@@ -28,7 +29,7 @@ export const HeroElectric = () => {
               {/* El logo es azul marino: se pasa a blanco y se le da halo eléctrico. */}
               <Image
                 src="/logo-full.svg"
-                alt="EnergyRex"
+                alt={siteConfig.name}
                 width={4440}
                 height={816}
                 priority

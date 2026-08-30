@@ -66,7 +66,10 @@ const sections = [
   {
     title: "8. Marco normativo aplicable",
     body: [
-      "Este sitio se rige por la Ley N° 19.628 sobre Protección de la Vida Privada. La Ley N° 21.719, publicada en diciembre de 2024, moderniza dicho régimen y crea la Agencia de Protección de Datos Personales; su entrada en vigencia está diferida a diciembre de 2026.",
+      // La forma verbal es deliberada: "fue fijada para" enuncia un hecho con
+      // fecha, no un pendiente. "está diferida a" envejecía sola al pasar esa
+      // fecha. No cambiar a un tiempo que dependa de cuándo se lea la página.
+      "Este sitio se rige por la Ley N° 19.628 sobre Protección de la Vida Privada. La Ley N° 21.719, publicada en diciembre de 2024, moderniza dicho régimen y crea la Agencia de Protección de Datos Personales; su entrada en vigencia plena fue fijada para el 1 de diciembre de 2026.",
     ],
   },
   {

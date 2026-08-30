@@ -15,6 +15,7 @@ los suyos. Si algún día unificas la paleta, este es el lugar donde anotarlo.
 | Archivo | Qué es |
 |---|---|
 | `logo-full-source.jpg` | JPEG de 708×298 del que se vectorizó el logo completo |
+| `logo.svg` | Isotipo (la S), vectorial. Fuente de la que se exporta el favicon |
 | `generate-og-image.mjs` | Genera `app/opengraph-image.png` (ver abajo) |
 
 `logo-full-source.jpg` es el único archivo que no se puede regenerar desde
@@ -27,8 +28,11 @@ Esta carpeta **no se sirve al público**: Next solo publica lo que está en
 
 | Archivo | Qué es | Para qué |
 |---|---|---|
-| `logo.svg` | Isotipo (la S), vectorial | Usos sueltos dentro del sitio |
 | `logo-full.svg` | Logo completo, vectorial, 13 KB | Cabecera, pie de página |
+
+Aquí solo va lo que el sitio carga por URL. El isotipo `logo.svg` vivía en esta
+carpeta pero ningún componente lo pedía: su único uso es como fuente del
+favicon, así que se movió a `design/`.
 
 Los SVG son los maestros: el mismo archivo sirve para 200 px o para 2000 px,
 sin exportar nada.
@@ -63,10 +67,10 @@ La proporción del logo completo es **5.44:1** (2400×441). Respétala al elegir
 Con `rsvg-convert` (`brew install librsvg`):
 
 ```bash
-rsvg-convert -w 512 -h 512 public/logo.svg -o app/icon.png
+rsvg-convert -w 512 -h 512 design/logo.svg -o app/icon.png
 ```
 
-Ojo con el destino: el SVG de origen vive en `public/`, pero el ícono de salida
+Ojo con el destino: el SVG de origen vive en `design/`, pero el ícono de salida
 va en `app/`. Si lo escribes en `public/` queda un archivo muerto y la pestaña
 sigue mostrando el anterior.
 

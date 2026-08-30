@@ -15,6 +15,10 @@ const geistSans = Geist({
  * Título y descripción por defecto del sitio. Viven en una constante porque
  * los consumen dos bloques distintos (`metadata` y `metadata.openGraph`) y
  * escribirlos dos veces garantiza que tarde o temprano queden desalineados.
+ *
+ * El "EnergyRex" del título va escrito y no sale de `siteConfig.name`: aquí es
+ * parte de una frase de marketing, no un dato suelto. Partirla para inyectar
+ * la variable se leería peor y no aporta nada.
  */
 const SITE_TITLE = "EnergyRex | Instalaciones Eléctricas Certificadas SEC";
 const SITE_DESCRIPTION =
@@ -24,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: SITE_TITLE,
-    template: "%s | EnergyRex",
+    template: `%s | ${siteConfig.name}`,
   },
   description: SITE_DESCRIPTION,
   // `icons` tampoco se declara: Next los resuelve por convención desde
@@ -42,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    siteName: "EnergyRex",
+    siteName: siteConfig.name,
     locale: "es_CL",
     type: "website",
   },

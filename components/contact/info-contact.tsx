@@ -1,5 +1,3 @@
-
-
 import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/lib/site-config";
 
@@ -12,6 +10,12 @@ const contactDetails = [
     label: "Teléfono / WhatsApp",
     value: contact.phone,
     href: contact.whatsapp,
+    /**
+     * Saca al visitante del sitio, así que se abre en pestaña nueva — igual
+     * que las otras tres apariciones de este enlace (footer y formulario).
+     * `mailto:` no lleva `external`: abre el cliente de correo, no una pestaña.
+     */
+    external: true,
   },
   {
     label: "Correo Electrónico",
@@ -35,7 +39,7 @@ export const InfoContact = () => {
         </h2>
 
         <dl className="mt-6 grid gap-5 sm:grid-cols-2">
-          {contactDetails.map(({ label, value, href }) => (
+          {contactDetails.map(({ label, value, href, external }) => (
             <div
               key={label}
               className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
@@ -47,6 +51,10 @@ export const InfoContact = () => {
                 {href ? (
                   <a
                     href={href}
+                    {...(external && {
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    })}
                     className="transition-colors hover:text-brand-mint"
                   >
                     {value}
