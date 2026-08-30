@@ -218,7 +218,12 @@ export const ElectricBorder = ({
     let { width, height } = updateSize();
     let lastDpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    const drawElectricBorder = (currentTime: number) => {
+    /**
+     * Pinta un fotograma con el tiempo acumulado que haya en `timeRef`. No
+     * agenda el siguiente: separar el pintado del avance del tiempo es lo que
+     * permite dibujar el borde una sola vez cuando hay movimiento reducido.
+     */
+    const render = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       if (dpr !== lastDpr) {
         lastDpr = dpr;
@@ -226,10 +231,6 @@ export const ElectricBorder = ({
         width = newSize.width;
         height = newSize.height;
       }
-
-      const deltaTime = (currentTime - lastFrameTimeRef.current) / 1000;
-      timeRef.current += deltaTime * speed;
-      lastFrameTimeRef.current = currentTime;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -294,23 +295,68 @@ export const ElectricBorder = ({
 
       ctx.closePath();
       ctx.stroke();
+    };
 
-      animationRef.current = requestAnimationFrame(drawElectricBorder);
+    /** Avanza el tiempo, pinta y se reagenda. Solo corre si hay movimiento. */
+    const animate = (currentTime: number) => {
+      const deltaTime = (currentTime - lastFrameTimeRef.current) / 1000;
+      timeRef.current += deltaTime * speed;
+      lastFrameTimeRef.current = currentTime;
+
+      render();
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    const stopAnimation = () => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+    };
+
+    const startAnimation = () => {
+      stopAnimation();
+      // Sin esto, el primer `deltaTime` sería todo el tiempo transcurrido desde
+      // que cargó la página (o desde que se congeló la animación), y el ruido
+      // daría un salto brusco en el primer fotograma.
+      lastFrameTimeRef.current = performance.now();
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    // La media query solo existe en el navegador, y este efecto solo corre ahí:
+    // nada de esto participa del HTML que se renderiza en el servidor.
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const applyMotionPreference = () => {
+      if (motionQuery.matches) {
+        // Movimiento reducido: el borde se dibuja igual, pero congelado.
+        stopAnimation();
+        render();
+      } else {
+        startAnimation();
+      }
     };
 
     const resizeObserver = new ResizeObserver(() => {
       const newSize = updateSize();
       width = newSize.width;
       height = newSize.height;
+      // Redimensionar el canvas borra su contenido. Con el bucle corriendo el
+      // siguiente fotograma lo repinta solo; congelado hay que repintar aquí o
+      // el borde desaparecería al rotar el dispositivo o cambiar el tamaño.
+      if (motionQuery.matches) {
+        render();
+      }
     });
     resizeObserver.observe(container);
 
-    animationRef.current = requestAnimationFrame(drawElectricBorder);
+    applyMotionPreference();
+    motionQuery.addEventListener("change", applyMotionPreference);
 
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      stopAnimation();
+      motionQuery.removeEventListener("change", applyMotionPreference);
       resizeObserver.disconnect();
     };
   }, [color, speed, chaos, borderRadius, octavedNoise, getRoundedRectPoint]);
